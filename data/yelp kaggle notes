@@ -1,0 +1,29 @@
+// yelp kaggle notes
+
+add all data into one file (make sure all data included, no errors)
+re-run regression (include error measure)
+add all data for testing
+add regularization and validation?
+
+
+
+
+
+detect poor grammar in string
+http://wweb.uta.edu/management/Dr.Casper/Fall10/BSAD6314/BSAD%206314-Student%20Articles/Moderated%20Multiple%20Regression/moderation%20...pdf
+
+
+
+
+
+
+We will use the Root Mean Squared Logarithmic Error (“RMSLE”) to measure the accuracy of an algorithm.
+
+ϵ=1n∑i=1n(log(pi+1)−log(ai+1))2−−−−−−−−−−−−−−−−−−−−−−−−−√
+Where:
+
+ϵ is the RMSLE value (score)
+n is the total number of reviews in the data set
+pi is the predicted number of useful votes for review i
+ai is the actual number of useful votes for review i
+log(x) is the natural logarithm of x
