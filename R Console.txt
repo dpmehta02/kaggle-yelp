@@ -1,0 +1,546 @@
+> summary(model)
+
+Call:
+lm(formula = votes_useful ~ u_avg_votes_useful)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-24.378  -0.760  -0.201   0.503  65.383 
+
+Coefficients:
+                    Estimate Std. Error t value Pr(>|t|)    
+(Intercept)        -0.066446   0.004828  -13.76   <2e-16 ***
+u_avg_votes_useful  0.845002   0.001919  440.43   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.624 on 213445 degrees of freedom
+  (16460 observations deleted due to missingness)
+Multiple R-squared:  0.4761,	Adjusted R-squared:  0.4761 
+F-statistic: 1.94e+05 on 1 and 213445 DF,  p-value: < 2.2e-16
+
+> attach(data)
+> model <- lm(votes_useful ~ u_avg_votes_useful + r_length + u_review_count)
+> summary(model, cor=T)
+
+Call:
+lm(formula = votes_useful ~ u_avg_votes_useful + r_length + u_review_count)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-22.347  -0.746  -0.146   0.534  69.960 
+
+Coefficients:
+                     Estimate Std. Error t value Pr(>|t|)    
+(Intercept)        -3.593e-01  5.772e-03  -62.26   <2e-16 ***
+u_avg_votes_useful  7.753e-01  2.112e-03  367.13   <2e-16 ***
+r_length            4.760e-04  5.767e-06   82.54   <2e-16 ***
+u_review_count      6.076e-04  1.808e-05   33.61   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.594 on 213430 degrees of freedom
+  (16473 observations deleted due to missingness)
+Multiple R-squared:  0.4951,	Adjusted R-squared:  0.4951 
+F-statistic: 6.976e+04 on 3 and 213430 DF,  p-value: < 2.2e-16
+
+Correlation of Coefficients:
+                   (Intercept) u_avg_votes_useful r_length
+u_avg_votes_useful -0.32                                  
+r_length           -0.55       -0.23                      
+u_review_count     -0.14       -0.38              -0.02   
+
+> prediction <- predict(model, newdata=data)
+> summary(prediction)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+ -0.358   0.470   0.992   1.391   1.769  84.230   16473 
+> head(prediction)
+        1         2         3         4         5         6 
+2.4243020 0.2820575 0.4539516 1.7346397 0.7669538 2.9124671 
+> summary(data)
+    r_stars       votes_useful     r_days_active       r_length      r_exclamations   r_extreme    u_average_stars
+ Min.   :1.000   Min.   :  0.000   Min.   :  14.0   Min.   :   0.0   Min.   : 0.000   No :136198   Min.   :0.000  
+ 1st Qu.:3.000   1st Qu.:  0.000   1st Qu.: 304.0   1st Qu.: 287.0   1st Qu.: 0.000   Yes: 93709   1st Qu.:3.510  
+ Median :4.000   Median :  1.000   Median : 624.0   Median : 539.0   Median : 0.000                Median :3.780  
+ Mean   :3.767   Mean   :  1.387   Mean   : 726.1   Mean   : 707.3   Mean   : 1.357                Mean   :3.757  
+ 3rd Qu.:5.000   3rd Qu.:  2.000   3rd Qu.:1047.0   3rd Qu.: 931.0   3rd Qu.: 2.000                3rd Qu.:4.050  
+ Max.   :5.000   Max.   :120.000   Max.   :2832.0   Max.   :5003.0   Max.   :93.000                Max.   :5.000  
+                                                    NA's   :14       NA's   :14                    NA's   :16460  
+ u_review_count   u_avg_votes_useful   c_checkins      b_review_count  b_overall_stars
+ Min.   :   1.0   Min.   :  0.000    Min.   :    3.0   Min.   :  3.0   Min.   :1.000  
+ 1st Qu.:  12.0   1st Qu.:  0.723    1st Qu.:   64.0   1st Qu.: 21.0   1st Qu.:3.500  
+ Median :  44.0   Median :  1.234    Median :  177.0   Median : 64.0   Median :4.000  
+ Mean   : 125.4   Mean   :  1.725    Mean   :  422.1   Mean   :112.8   Mean   :3.776  
+ 3rd Qu.: 151.0   3rd Qu.:  2.020    3rd Qu.:  431.0   3rd Qu.:144.0   3rd Qu.:4.000  
+ Max.   :5807.0   Max.   :108.667    Max.   :22977.0   Max.   :862.0   Max.   :5.000  
+ NA's   :16460    NA's   :16460      NA's   :19883     NA's   :3727    NA's   :3727   
+> cor(data$votes_useful, prediction, use="pairwise")
+[1] 0.7036307
+starting httpd help server ... done
+> options(scipen=100)
+> summary(model, cor=T)
+
+Call:
+lm(formula = votes_useful ~ u_avg_votes_useful + r_length + u_review_count)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-22.347  -0.746  -0.146   0.534  69.960 
+
+Coefficients:
+                       Estimate   Std. Error t value            Pr(>|t|)    
+(Intercept)        -0.359339491  0.005771749  -62.26 <0.0000000000000002 ***
+u_avg_votes_useful  0.775294587  0.002111770  367.13 <0.0000000000000002 ***
+r_length            0.000475972  0.000005767   82.54 <0.0000000000000002 ***
+u_review_count      0.000607560  0.000018077   33.61 <0.0000000000000002 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.594 on 213430 degrees of freedom
+  (16473 observations deleted due to missingness)
+Multiple R-squared:  0.4951,	Adjusted R-squared:  0.4951 
+F-statistic: 6.976e+04 on 3 and 213430 DF,  p-value: < 0.00000000000000022
+
+Correlation of Coefficients:
+                   (Intercept) u_avg_votes_useful r_length
+u_avg_votes_useful -0.32                                  
+r_length           -0.55       -0.23                      
+u_review_count     -0.14       -0.38              -0.02   
+
+> plot(prediction, votes_useful)
+> plot(prediction, votes_useful)
+Error in title(...) : plot.new has not been called yet
+> plot(prediction, votes_useful, main="4-25 prediction") abline(res, col="blue")
+Error: unexpected symbol in "plot(prediction, votes_useful, main="4-25 prediction") abline"
+> plot(prediction, votes_useful, main="425 prediction") abline(res, col="blue")
+Error: unexpected symbol in "plot(prediction, votes_useful, main="425 prediction") abline"
+> plot(prediction, votes_useful, main="425 prediction")
+plot(prediction, votes_useful, main="425 prediction")
+> abline(res, col="blue")
+Error in abline(res, col = "blue") : object 'res' not found
+> plot(prediction, votes_useful, main="425 prediction")
+> abline(model, col="blue")
+Warning message:
+In abline(model, col = "blue") :
+  only using the first two of 4 regression coefficients
+> lines(predict(model))
+Error in plot.xy(xy.coords(x, y), type = type, ...) : 
+  plot.new has not been called yet
+> plot(prediction, votes_useful, main="425 prediction")
+> abline(prediction, col="blue")
+Error in int_abline(a = a, b = b, h = h, v = v, untf = untf, ...) : 
+  invalid a=, b= specification
+> plotline <- plot(prediction, votes_useful, main="425 prediction")
+> abline(plotline, col="blue")
+> plot(prediction, votes_useful, main="425 prediction")
+> abline(plotline, col="blue")
+> plot(prediction, votes_useful, main="425 prediction", xlim=(0,20))
+Error: unexpected ',' in "plot(prediction, votes_useful, main="425 prediction", xlim=(0,"
+> plot(prediction, votes_useful, main="425 prediction", xlim=(20))
+Error in plot.window(...) : invalid 'xlim' value
+> plot(prediction, votes_useful, main="425 prediction", xlim=20)
+Error in plot.window(...) : invalid 'xlim' value
+> plot(prediction, votes_useful, main="425 prediction", 20)
+Error in plot.xy(xy, type, ...) : invalid plot type
+> plot(prediction, votes_useful, main="425 prediction", plot.window(20,20))
+Error in plot.window(20, 20) : invalid 'xlim' value
+> plot(prediction, votes_useful, main="425 prediction", type="o")
+> plot(prediction, votes_useful, main="425 prediction", xlim=range(0, 20))
+> plot(prediction, votes_useful, main="425 prediction", xlim=range(0, 20), ylim=range(0,20))
+> plot(prediction, votes_useful, main="425 prediction", xlim=range(0, 5), ylim=range(0,5))
+> plot(prediction, votes_useful, main="425 prediction", xlim=range(0, 5), ylim=range(0,5))
+> abline(prediction, col="blue")
+Error in int_abline(a = a, b = b, h = h, v = v, untf = untf, ...) : 
+  invalid a=, b= specification
+> abline(prediction)
+Error in int_abline(a = a, b = b, h = h, v = v, untf = untf, ...) : 
+  invalid a=, b= specification
+> abline(model)
+Warning message:
+In abline(model) : only using the first two of 4 regression coefficients
+> testdata <- read.csv("~/Kaggle/yelp/data/test_data.csv")
+> prediction <- predict(model, newdata=testdata)
+Error in model.frame.default(Terms, newdata, na.action = na.action, xlev = object$xlevels) : 
+  variable lengths differ (found for 'r_length')
+In addition: Warning message:
+'newdata' had 22956 rows but variables found have 229907 rows 
+> attach(testdata)
+The following object is masked from data:
+
+    u_avg_votes_useful
+> summary(testdat)
+Error in summary(testdat) : object 'testdat' not found
+> summary(testdata)
+         date                        review_id         stars     
+ 2013-02-20:  354   __pahYxcWwu05dPXxC_m5w:    1   Min.   :1.00  
+ 2013-02-26:  332   __Ph4Kj6a13aFaxq7zPzug:    1   1st Qu.:3.00  
+ 2013-02-18:  325   __uFLnzYUfE-mu82UU7evA:    1   Median :4.00  
+ 2013-02-24:  310   _-c6weN5djKAnA_Hug7FPQ:    1   Mean   :3.77  
+ 2013-02-25:  302   _-K5y40uUfgutUziZq0SJg:    1   3rd Qu.:5.00  
+ 2013-01-27:  281   _0-4_tUb2cr6W17HJ2f_ew:    1   Max.   :5.00  
+ (Other)   :21052   (Other)               :22950                 
+                                                                                 text                         user_id     
+ closed                                                                            :    5   wqQ-50Sjf9ol3SYaPbA1YQ:   93  
+ Great service                                                                     :    3   ky75pkIL378HJbe-x0GwXA:   81  
+ Yummy                                                                             :    3   kGgAARL2UmvCcTRfiscjug:   72  
+ Good food                                                                         :    2   1BW2HC851fJKPfJeQxjkTA:   58  
+ Great food! Great service!                                                        :    2   uZbTb-u-GVjTa2gtQfry5g:   57  
+ Pretty standard Jamba Juice.   Overpriced fruit, milk, sugar and ice in a blender.:    2   ikm0UCahtK34LbLCEw4YTw:   53  
+ (Other)                                                                           :22939   (Other)               :22542  
+     length       u_avg_votes_useful
+ Min.   :   1.0   Mode:logical      
+ 1st Qu.: 243.0   NA's:22956        
+ Median : 466.0                     
+ Mean   : 644.1                     
+ 3rd Qu.: 844.0                     
+ Max.   :4999.0                     
+                                    
+> summary(model)
+
+Call:
+lm(formula = votes_useful ~ u_avg_votes_useful + r_length + u_review_count)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-22.347  -0.746  -0.146   0.534  69.960 
+
+Coefficients:
+                       Estimate   Std. Error t value            Pr(>|t|)    
+(Intercept)        -0.359339491  0.005771749  -62.26 <0.0000000000000002 ***
+u_avg_votes_useful  0.775294587  0.002111770  367.13 <0.0000000000000002 ***
+r_length            0.000475972  0.000005767   82.54 <0.0000000000000002 ***
+u_review_count      0.000607560  0.000018077   33.61 <0.0000000000000002 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.594 on 213430 degrees of freedom
+  (16473 observations deleted due to missingness)
+Multiple R-squared:  0.4951,	Adjusted R-squared:  0.4951 
+F-statistic: 6.976e+04 on 3 and 213430 DF,  p-value: < 0.00000000000000022
+
+> reviewdata <- read.csv("~/Documents/kaggle/yelp/yelp_academic_dataset/yelp_academic_dataset_review.csv")
+Error in file(file, "rt") : cannot open the connection
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file '/Users/devmehta/Documents/kaggle/yelp/yelp_academic_dataset/yelp_academic_dataset_review.csv': No such file or directory
+> reviewdata <- read.csv("~/Documents/kaggle/yelp/yelp_test_set/yelp_test_set_review.csv")
+Error in file(file, "rt") : cannot open the connection
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file '/Users/devmehta/Documents/kaggle/yelp/yelp_test_set/yelp_test_set_review.csv': No such file or directory
+> reviewdata <- read.csv("~/Kaggle/yelp/yelp_training_set/yelp_training_set_review.csv")
+> summary(reviewdata)
+                 business_id             date                         review_id          stars      
+ hW0Ne_HTHEAgGF1rAdmR-g:   844   2013-01-03:   371   ___XYEos-RIkPsQwplRYyw:     1   Min.   :1.000  
+ VVeogjZya58oiTxK7qUjAQ:   794   2013-01-02:   334   __-32b1OWffXPHRrRgWJFQ:     1   1st Qu.:3.000  
+ JokKtdXU7zXHcr20Lrk29A:   731   2013-01-04:   299   __0G7C28bnbwxdtanv-1Bg:     1   Median :4.000  
+ ntN85eu27C04nwyPa8IHtw:   679   2012-07-10:   282   __0iPx4ocdLZk58kLpeakQ:     1   Mean   :3.767  
+ EWMwV5V9BxNs_U6nNVMeqw:   645   2012-07-09:   276   __0tg60rGHLDR-MqztVUyA:     1   3rd Qu.:5.000  
+ V1nEpIRmEa1768oj_tuxeQ:   588   2012-11-26:   273   __0z2Ar1Vs96LII1Gkw2qg:     1   Max.   :5.000  
+ (Other)               :225626   (Other)   :228072   (Other)               :229901                  
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             text       
+ closed                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        :    13  
+ Closed                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        :    11  
+ This review is for the chain in general. The location we went to is new so it isn't in Yelp yet. Once it is I will put this review there as well. We were there on Friday at 5 PM. \n\nThe reason I gave it 2 stars is because the burger was very good and it was made the way I asked for it. My husbands burger was not.\n\nBut, the server and the fries left a lot to be desired. Let me preface by saying that we had been to several other locations. I like my fries crispy. I ask for them well done, extra crispy, scorched, tortured hollow tubes. Whatever their buzz word is for well done. The location will comply. EVERY OTHER 5 GUYS HAS COMPLIED. But not the one at TATUM AND SHEA. She said that corporate said they are not to cook the fries that way. So if we were to put up with soggy fries - yes soggy, then we did not want them. \n\nShe also interrupted us several times which is rude. THEN she went and called corporate just to double check for us and she came to the table and said they said no they were not to cook them that way. Seriously? We did not ask for her to do this. She actually accused us of being undercover shoppers. We started to say something and then again- she interupted.\n\nListen, if you explain that our choice is not how the company wishes to present their product and we still choose to have them a different way, you should comply. It is after all our money and our decision. I was raised with the rules that #1 the customer is always right. And #2 if the customer is wrong REFER TO RULE NUMBER 1!!\n\nWe will not return. They have lost our business and I hope she loses her job.\nIf you want to try a really good burger AND FRIES place- go to Paradise Valley Burger Company at 40th Street and Bell. You will not be disappointed.:    11  
+ r.i.p.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        :     7  
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               :     6  
+ Awesome!                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      :     6  
+ (Other)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       :229853  
+     type                          user_id         votes_cool        votes_funny      votes_useful    
+ review:229907   fczQCSmaWF78toLEmb0Zsw:   588   Min.   :  0.0000   Min.   : 0.000   Min.   :  0.000  
+                 90a6z--_CUrl84aCzZyPsg:   506   1st Qu.:  0.0000   1st Qu.: 0.000   1st Qu.:  0.000  
+                 0CMz8YaO3f8xu4KqQgKb9Q:   473   Median :  0.0000   Median : 0.000   Median :  1.000  
+                 4ozupHULqGyO42s3zNUzOQ:   442   Mean   :  0.8682   Mean   : 0.699   Mean   :  1.387  
+                 joIzw_aUiNvBTuGoytrH7g:   392   3rd Qu.:  1.0000   3rd Qu.: 1.000   3rd Qu.:  2.000  
+                 0bNXP9quoJEgyVZu9ipGgQ:   376   Max.   :117.0000   Max.   :70.000   Max.   :120.000  
+                 (Other)               :227130                                                        
+> reviewdata <- read.csv("~/Kaggle/yelp/yelp_training_set/yelp_training_set_user.csv")
+> head(reviewdata)
+  average_stars      name review_count type                user_id votes_cool votes_funny votes_useful u_avg_votes_useful
+1          5.00       Jim            6 user CR2y7yEm4X035ZMzrTtN9Q          0           0            7           1.166667
+2          1.00     Kelle            2 user _9GXoHhdxc30ujPaQwh6Ew          0           0            1           0.500000
+3          5.00 Stephanie            2 user 8mM-nqxjg6pT04kwcjMbsw          0           0            1           0.500000
+4          5.00         T            2 user Ch6CdTR2IVaVANr-RglMOg          0           0            2           1.000000
+5          1.00      Beth            1 user NZrLmHRyiHmyT1JrfzkCOA          0           0            0           0.000000
+6          3.79       Amy           19 user mWx5Sxt_dx-sYBZg6RgJHQ         36          30           45           2.368421
+> summary(model)
+
+Call:
+lm(formula = votes_useful ~ u_avg_votes_useful + r_length + u_review_count)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-22.347  -0.746  -0.146   0.534  69.960 
+
+Coefficients:
+                       Estimate   Std. Error t value            Pr(>|t|)    
+(Intercept)        -0.359339491  0.005771749  -62.26 <0.0000000000000002 ***
+u_avg_votes_useful  0.775294587  0.002111770  367.13 <0.0000000000000002 ***
+r_length            0.000475972  0.000005767   82.54 <0.0000000000000002 ***
+u_review_count      0.000607560  0.000018077   33.61 <0.0000000000000002 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.594 on 213430 degrees of freedom
+  (16473 observations deleted due to missingness)
+Multiple R-squared:  0.4951,	Adjusted R-squared:  0.4951 
+F-statistic: 6.976e+04 on 3 and 213430 DF,  p-value: < 0.00000000000000022
+
+> testdatav1 <- merge(testdata, reviewdata, by = "user_id", use="pairwise")
+> head(testdatav1)
+                 user_id       date              review_id stars
+1 _01X4a-sS1Oc2yZuMMuCEQ 2011-05-26 1fu8PA4WHOtpZU_IYiYGBA     5
+2 _01X4a-sS1Oc2yZuMMuCEQ 2009-09-10 kug1XXCFtgFx82dBsCAFMg     5
+3 _01X4a-sS1Oc2yZuMMuCEQ 2013-01-31 bg3Xom7133zvpjcImgR7WA     5
+4 _01X4a-sS1Oc2yZuMMuCEQ 2013-01-18 PLlXrpgO5MFYkIIQQMVfgQ     5
+5 _0KkuMf1GL-ccyCR-o_Qpw 2012-01-27 lPWHIIPlFdx_W86mkvwMxQ     2
+6 _0wsW5uexL4r5Pe2HtmKSw 2012-12-26 d1VkKBIuqe2140UmfDM7Ug     3
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      text
+1 What a great restaurant! We tried numerous dishes and everything was excellent. \n\nThe Causa was very good but it is a very filling appetizer. My Girlfriend ate a small amount and I ended up eating the rest. That made it hard to finish my whole meal. But I managed. \n\nWe shared the Picante de Mariscos and the Picante de Camarones y Conchas. They are similar dishes but both had it's own unique taste. Both meals were wonderful and all of the seafood seemed very fresh.\n\nI think I'm going for the Chaufa next time and I can't wait!
+2                                                                                                                                                                                                                                                                                                              This place is one of the best steakhouses I have been to. Great prices, fresh meats, good portions. This is my new steakhouse for sure! Best to go after 6pm to miss the seasoned citizens crowd. Next time I will try the stuffed burgers!
+3                                                                                                                                                                                                                                               This is quickly becoming my favorite place to eat out! Everything I have had here has been excellent. The shrimp po boy is wonderful and the gumbo, wow! I tried the catfish for the first time today and it was perfect. Every time I leave this place I'm planning the next time I'm going to come back.
+4                                        I have no idea what the folks are saying about poor service. I have always had fast and friendly service.\n\nAnyway, the food is always good. I love the traditional Midwest Pork Tenderloin sandwich. It is very good. The hotdogs are awesome and I love their chili. The Italian Beef is one of my favorite things they serve. Our family has been here many times and all of us like it. We have never had anything we didn't like.\n\nWe like to support the small, non chain places and this is a good one!
+5                                                                                                                                            Nothing special just a bar... everyone speaks so great about it but when i went all i\nthought was "i feel sorry for the people who think this is the best place ever!" because\nit was so not all that lol.  The only good thing about this place were the bar tenders\nbecause they dress in cowboy gear but only like 2 of them should be wearing that.\nAlso their sunday happy hour is great! 3 for 1 :)
+6                                                                                                                                                                                                           I liked their Caesar salad, which had cashews instead of croutons.  We split the chicken and spinach pizza, which was decent, but not a homerun by any means.  The wine could use a bit of work.  I'm sorry, but Cetamura chianti is not worth $9 per glass.  I know that places sell wine to pay the bills, but at least make it interesting.
+  length u_avg_votes_useful.x average_stars    name review_count type votes_cool votes_funny votes_useful u_avg_votes_useful.y
+1    530                   NA          4.25    Eric           16 user          3           1           20            1.2500000
+2    235                   NA          4.25    Eric           16 user          3           1           20            1.2500000
+3    298                   NA          4.25    Eric           16 user          3           1           20            1.2500000
+4    493                   NA          4.25    Eric           16 user          3           1           20            1.2500000
+5    393                   NA          3.33 Matthew            9 user          2           1           11            1.2222222
+6    334                   NA          3.81   Brian          141 user         83          66          123            0.8723404
+> summary(testdatav1)
+                   user_id              date                        review_id         stars      
+ kGgAARL2UmvCcTRfiscjug:   72   2013-01-06:  193   _-K5y40uUfgutUziZq0SJg:    1   Min.   :1.000  
+ 1BW2HC851fJKPfJeQxjkTA:   58   2013-01-20:  176   _01X19lpwdl2r7GzBcCSpA:    1   1st Qu.:3.000  
+ uZbTb-u-GVjTa2gtQfry5g:   57   2013-01-27:  176   _0qusCwXZbVzxURVMD8RAg:    1   Median :4.000  
+ ikm0UCahtK34LbLCEw4YTw:   53   2013-01-09:  172   _0UL38n9bojIuRvPFxgvEw:    1   Mean   :3.796  
+ tHz9cWxwSfcP4qRaPIHvww:   52   2013-02-26:  171   _15cLRS94K8cUwGtPL0PlQ:    1   3rd Qu.:5.000  
+ DrWLhrK8WMZf7Jb-Oqc7ww:   43   2013-02-18:  169   _1kwSlfsUjIuTbwqXZYxNw:    1   Max.   :5.000  
+ (Other)               :13512   (Other)   :12790   (Other)               :13841                  
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        text      
+ closed                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   :    3  
+ Good food                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                :    2  
+ Great service                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            :    2  
+ The Pho here is excellent!  Stopped in for lunch and I'm already thinking about the next time I can go back.  It's really hard to find authentic Vietnamese here in the Valley, but this place does it, and does it right.  My service was also really on point.  My diet coke was always full, so again it ticks the box for what a great Vietnamese place should be.  \n\nNext time I come, I have to try the grill portion of the menu.  I saw a grilled shrimp dish come out while I was waiting for my Pho and it lookes awesome!  I'll have to make the trek on a weekend and bring my wife.  Great food, nice atmosphere, and good people make this place a must stop for the Vietnamese cuisine lover in Phoenix!                                                                                                                                                                :    2  
+ This place rocks! I started eating much healthier earlier this year and Sprouts has been a key to sticking with it. Fresh fruits and veggies, AWESOME sandwich deal in the deli, happy and knowledgeable employees. The only negative is how many snow birds crowd this place out in the winter. I do not know why they cannot follow instructions and write down the sku numbers for their bulk items, or why they deem it necessary to sit drinking coffee in the deli for hours so there is no room for those actually eating the deli lunches to sit, but that is neither here nor there. I love Sprouts!                                                                                                                                                                                                                                                                            :    2  
+ With a large menu, everyone in your party is bound to find something wonderful to eat!  Every item I have had on the menu has been delicious and a complete delight!  The flavors are expansive and the desserts...YUM!  The Crème Brule is divine!  The atmosphere is inviting and adventurous.  The bar has a very large selection of spirits and beers.  The staff has always been friendly, helpful, knowledgeable and professional.  The management is regularly seen on the floor and every time I have been in, he/she has come by to check on me and my satisfaction with my meal and service.  \n\nI go to the Elephant Bar and Grill at least twice a month and am trying to get a weekly girl's night out set up there!  The happy hour is perfect!  Oh and the fact they are involved with local events and fundraising endeavors by local non-profits gets an A+ in my book!:    2  
+ (Other)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  :13834  
+     length       u_avg_votes_useful.x average_stars         name        review_count      type         votes_cool     
+ Min.   :   3.0   Mode:logical         Min.   :0.000   Michael :  198   Min.   :   1.0   user:13847   Min.   :    0.0  
+ 1st Qu.: 270.5   NA's:13847           1st Qu.:3.500   Jennifer:  151   1st Qu.:  11.0                1st Qu.:    2.0  
+ Median : 516.0                        Median :3.780   Mike    :  130   Median :  35.0                Median :   11.0  
+ Mean   : 693.1                        Mean   :3.741   Mark    :  124   Mean   : 112.8                Mean   :  217.4  
+ 3rd Qu.: 917.0                        3rd Qu.:4.040   David   :  123   3rd Qu.: 126.0                3rd Qu.:   66.0  
+ Max.   :4999.0                        Max.   :5.000   J       :  111   Max.   :2448.0                Max.   :11059.0  
+                                                       (Other) :13010                                                  
+  votes_funny       votes_useful     u_avg_votes_useful.y
+ Min.   :    0.0   Min.   :    0.0   Min.   : 0.0000     
+ 1st Qu.:    2.0   1st Qu.:    9.0   1st Qu.: 0.6286     
+ Median :   10.0   Median :   35.0   Median : 1.0588     
+ Mean   :  168.7   Mean   :  315.8   Mean   : 1.4912     
+ 3rd Qu.:   57.0   3rd Qu.:  159.0   3rd Qu.: 1.7778     
+ Max.   :11987.0   Max.   :12766.0   Max.   :26.9167     
+                                                         
+> write.csv(testdatav1="test.csv")
+Error in write.table(testdatav1 = "test.csv", col.names = NA, sep = ",",  : 
+  unused argument (testdatav1 = "test.csv")
+> write.csv(testdatav1, "testdatav1.csv")
+> testdatav1 <- merge(testdata, reviewdata, by = "user_id", all.x=TRUE)
+> summary(testdatav1)
+                   user_id              date                        review_id         stars     
+ wqQ-50Sjf9ol3SYaPbA1YQ:   93   2013-02-20:  354   __pahYxcWwu05dPXxC_m5w:    1   Min.   :1.00  
+ ky75pkIL378HJbe-x0GwXA:   81   2013-02-26:  332   __Ph4Kj6a13aFaxq7zPzug:    1   1st Qu.:3.00  
+ kGgAARL2UmvCcTRfiscjug:   72   2013-02-18:  325   __uFLnzYUfE-mu82UU7evA:    1   Median :4.00  
+ 1BW2HC851fJKPfJeQxjkTA:   58   2013-02-24:  310   _-c6weN5djKAnA_Hug7FPQ:    1   Mean   :3.77  
+ uZbTb-u-GVjTa2gtQfry5g:   57   2013-02-25:  302   _-K5y40uUfgutUziZq0SJg:    1   3rd Qu.:5.00  
+ ikm0UCahtK34LbLCEw4YTw:   53   2013-01-27:  281   _0-4_tUb2cr6W17HJ2f_ew:    1   Max.   :5.00  
+ (Other)               :22542   (Other)   :21052   (Other)               :22950                 
+                                                                                 text           length      
+ closed                                                                            :    5   Min.   :   1.0  
+ Great service                                                                     :    3   1st Qu.: 243.0  
+ Yummy                                                                             :    3   Median : 466.0  
+ Good food                                                                         :    2   Mean   : 644.1  
+ Great food! Great service!                                                        :    2   3rd Qu.: 844.0  
+ Pretty standard Jamba Juice.   Overpriced fruit, milk, sugar and ice in a blender.:    2   Max.   :4999.0  
+ (Other)                                                                           :22939                   
+ u_avg_votes_useful.x average_stars         name        review_count      type         votes_cool       votes_funny     
+ Mode:logical         Min.   :0.000   Michael :  198   Min.   :   1.0   user:13847   Min.   :    0.0   Min.   :    0.0  
+ NA's:22956           1st Qu.:3.500   Jennifer:  151   1st Qu.:  11.0   NA's: 9109   1st Qu.:    2.0   1st Qu.:    2.0  
+                      Median :3.780   Mike    :  130   Median :  35.0                Median :   11.0   Median :   10.0  
+                      Mean   :3.741   Mark    :  124   Mean   : 112.8                Mean   :  217.4   Mean   :  168.7  
+                      3rd Qu.:4.040   David   :  123   3rd Qu.: 126.0                3rd Qu.:   66.0   3rd Qu.:   57.0  
+                      Max.   :5.000   (Other) :13121   Max.   :2448.0                Max.   :11059.0   Max.   :11987.0  
+                      NA's   :9109    NA's    : 9109   NA's   :9109                  NA's   :9109      NA's   :9109     
+  votes_useful     u_avg_votes_useful.y
+ Min.   :    0.0   Min.   : 0.000      
+ 1st Qu.:    9.0   1st Qu.: 0.629      
+ Median :   35.0   Median : 1.059      
+ Mean   :  315.8   Mean   : 1.491      
+ 3rd Qu.:  159.0   3rd Qu.: 1.778      
+ Max.   :12766.0   Max.   :26.917      
+ NA's   :9109      NA's   :9109        
+> write.csv(testdatav1, "testdatav1.csv")
+> testdata <- testdatav1
+> summary(testdata)
+                   user_id              date                        review_id         stars     
+ wqQ-50Sjf9ol3SYaPbA1YQ:   93   2013-02-20:  354   __pahYxcWwu05dPXxC_m5w:    1   Min.   :1.00  
+ ky75pkIL378HJbe-x0GwXA:   81   2013-02-26:  332   __Ph4Kj6a13aFaxq7zPzug:    1   1st Qu.:3.00  
+ kGgAARL2UmvCcTRfiscjug:   72   2013-02-18:  325   __uFLnzYUfE-mu82UU7evA:    1   Median :4.00  
+ 1BW2HC851fJKPfJeQxjkTA:   58   2013-02-24:  310   _-c6weN5djKAnA_Hug7FPQ:    1   Mean   :3.77  
+ uZbTb-u-GVjTa2gtQfry5g:   57   2013-02-25:  302   _-K5y40uUfgutUziZq0SJg:    1   3rd Qu.:5.00  
+ ikm0UCahtK34LbLCEw4YTw:   53   2013-01-27:  281   _0-4_tUb2cr6W17HJ2f_ew:    1   Max.   :5.00  
+ (Other)               :22542   (Other)   :21052   (Other)               :22950                 
+                                                                                 text           length      
+ closed                                                                            :    5   Min.   :   1.0  
+ Great service                                                                     :    3   1st Qu.: 243.0  
+ Yummy                                                                             :    3   Median : 466.0  
+ Good food                                                                         :    2   Mean   : 644.1  
+ Great food! Great service!                                                        :    2   3rd Qu.: 844.0  
+ Pretty standard Jamba Juice.   Overpriced fruit, milk, sugar and ice in a blender.:    2   Max.   :4999.0  
+ (Other)                                                                           :22939                   
+ u_avg_votes_useful.x average_stars         name        review_count      type         votes_cool       votes_funny     
+ Mode:logical         Min.   :0.000   Michael :  198   Min.   :   1.0   user:13847   Min.   :    0.0   Min.   :    0.0  
+ NA's:22956           1st Qu.:3.500   Jennifer:  151   1st Qu.:  11.0   NA's: 9109   1st Qu.:    2.0   1st Qu.:    2.0  
+                      Median :3.780   Mike    :  130   Median :  35.0                Median :   11.0   Median :   10.0  
+                      Mean   :3.741   Mark    :  124   Mean   : 112.8                Mean   :  217.4   Mean   :  168.7  
+                      3rd Qu.:4.040   David   :  123   3rd Qu.: 126.0                3rd Qu.:   66.0   3rd Qu.:   57.0  
+                      Max.   :5.000   (Other) :13121   Max.   :2448.0                Max.   :11059.0   Max.   :11987.0  
+                      NA's   :9109    NA's    : 9109   NA's   :9109                  NA's   :9109      NA's   :9109     
+  votes_useful     u_avg_votes_useful.y
+ Min.   :    0.0   Min.   : 0.000      
+ 1st Qu.:    9.0   1st Qu.: 0.629      
+ Median :   35.0   Median : 1.059      
+ Mean   :  315.8   Mean   : 1.491      
+ 3rd Qu.:  159.0   3rd Qu.: 1.778      
+ Max.   :12766.0   Max.   :26.917      
+ NA's   :9109      NA's   :9109        
+> prediction <- predict(model, newdata=testdata)
+Error in model.frame.default(Terms, newdata, na.action = na.action, xlev = object$xlevels) : 
+  variable lengths differ (found for 'r_length')
+In addition: Warning message:
+'newdata' had 22956 rows but variables found have 229907 rows 
+> testdata <- read.csv("~/Kaggle/yelp/data/test_data.csv")
+> summary(testdata)
+       X                           user_id              date                        review_id         stars     
+ Min.   :    1   wqQ-50Sjf9ol3SYaPbA1YQ:   93   2013-02-20:  354   __pahYxcWwu05dPXxC_m5w:    1   Min.   :1.00  
+ 1st Qu.: 5740   ky75pkIL378HJbe-x0GwXA:   81   2013-02-26:  332   __Ph4Kj6a13aFaxq7zPzug:    1   1st Qu.:3.00  
+ Median :11478   kGgAARL2UmvCcTRfiscjug:   72   2013-02-18:  325   __uFLnzYUfE-mu82UU7evA:    1   Median :4.00  
+ Mean   :11478   1BW2HC851fJKPfJeQxjkTA:   58   2013-02-24:  310   _-c6weN5djKAnA_Hug7FPQ:    1   Mean   :3.77  
+ 3rd Qu.:17217   uZbTb-u-GVjTa2gtQfry5g:   57   2013-02-25:  302   _-K5y40uUfgutUziZq0SJg:    1   3rd Qu.:5.00  
+ Max.   :22956   ikm0UCahtK34LbLCEw4YTw:   53   2013-01-27:  281   _0-4_tUb2cr6W17HJ2f_ew:    1   Max.   :5.00  
+                 (Other)               :22542   (Other)   :21052   (Other)               :22950                 
+                                                                                 text           length      
+ closed                                                                            :    5   Min.   :   1.0  
+ Great service                                                                     :    3   1st Qu.: 243.0  
+ Yummy                                                                             :    3   Median : 466.0  
+ Good food                                                                         :    2   Mean   : 644.1  
+ Great food! Great service!                                                        :    2   3rd Qu.: 844.0  
+ Pretty standard Jamba Juice.   Overpriced fruit, milk, sugar and ice in a blender.:    2   Max.   :4999.0  
+ (Other)                                                                           :22939                   
+ u_avg_votes_useful.x average_stars         name        review_count      type         votes_cool       votes_funny     
+ Mode:logical         Min.   :0.000   Michael :  198   Min.   :   1.0   user:13847   Min.   :    0.0   Min.   :    0.0  
+ NA's:22956           1st Qu.:3.500   Jennifer:  151   1st Qu.:  24.0   NA's: 9109   1st Qu.:    2.0   1st Qu.:    2.0  
+                      Median :3.780   Mike    :  130   Median :  35.0                Median :   11.0   Median :   10.0  
+                      Mean   :3.741   Mark    :  124   Mean   :  81.9                Mean   :  217.4   Mean   :  168.7  
+                      3rd Qu.:4.040   David   :  123   3rd Qu.:  56.0                3rd Qu.:   66.0   3rd Qu.:   57.0  
+                      Max.   :5.000   (Other) :13121   Max.   :2448.0                Max.   :11059.0   Max.   :11987.0  
+                      NA's   :9109    NA's    : 9109                                 NA's   :9109      NA's   :9109     
+  votes_useful     u_avg_votes_useful.y
+ Min.   :    0.0   Min.   : 0.0000     
+ 1st Qu.:    9.0   1st Qu.: 0.9258     
+ Median :   35.0   Median : 1.0590     
+ Mean   :  315.8   Mean   : 1.3197     
+ 3rd Qu.:  159.0   3rd Qu.: 1.2500     
+ Max.   :12766.0   Max.   :26.9167     
+ NA's   :9109                          
+> prediction <- predict(model, newdata=testdata)
+Error in model.frame.default(Terms, newdata, na.action = na.action, xlev = object$xlevels) : 
+  variable lengths differ (found for 'r_length')
+In addition: Warning message:
+'newdata' had 22956 rows but variables found have 229907 rows 
+> rename(testdata, c("length" = "r_length"))
+Error: could not find function "rename"
+> names(testdata)[names(testdata)=="length"] <- "r_length"
+> head(testdata)
+  X                user_id       date              review_id stars
+1 1 __K0F5CMao-1u3y3DoE7wA 2013-01-10 yj9dalaV-MfKrsMRObzanQ     5
+2 2 __UPhB37Awu7Ue-saxK7Gg 2013-01-29 LN9z7uupCBjmJcnEXRbtiw     4
+3 3 __xuNw6-rbLvAbFrS_y-xg 2012-05-08 Qa7qzwph_dR_FZWaA0ErDw     4
+4 4 __YRhEhah0mc0LExN6_ILA 2010-07-02 OG2J1XAUt72VhotiLp71jQ     5
+5 5 __YRhEhah0mc0LExN6_ILA 2012-10-31 _4Uhlz9oFQJckMygbAL3eA     1
+6 6 _-lBbF_oVwiiDhL6L8QyRg 2013-02-26 f_VnAmc1DXyYsDztV74pjA     5
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   text
+1                                                                                                                                                                                                                                                                                                  My boyfriend gets his haircut here and so I am writing the review for him.  He went back to this place after a few years of being gone and he had forgotten how great this place is.  He said he wouldn't go anywhere else again.  Highly recommend!
+2                                                                                                                                                                                                                                                                                                                                                                                                     Have been here twice on business trips and both meals were very pleasant experiences.  Great wedge salad really hit the spot on the latest visit.
+3                                                                                                                                                                                                                                                                                                                                      We have been a customer since 1997.  We have been pleased with the service of our water softener system and general plumbing needs over the years.\nThey are a good company and I would recommend their service.
+4                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          Best sliders and sandwich I have ever had!!!
+5                                                                                                                                                                                                                                                                                                                                                                                     What a joke!! I waited for an hour to see someone in geek squad!! No wonder best buy is going under! Customer service is a joke!  Please avoid this location!!!!!
+6 Furniture Plus has been the only place where my family buys furniture for the last decade.  I shop around many places and for the same quality, their prices cannot be beat.  They do take a week or two longer since they order their products from the manufacturers, but its worth the wait for the great deals.  Their sales people are courteous and do not pressure you.  They always try to work with your budget and give you recommendations on what is best for your budget range.  I do not like their beds, but everything else is great!
+  r_length u_avg_votes_useful.x average_stars name review_count type votes_cool votes_funny votes_useful u_avg_votes_useful.y
+1      244                   NA            NA <NA>           35 <NA>         NA          NA           NA                1.059
+2      145                   NA            NA <NA>           35 <NA>         NA          NA           NA                1.059
+3      207                   NA            NA <NA>           35 <NA>         NA          NA           NA                1.059
+4       44                   NA            NA <NA>           35 <NA>         NA          NA           NA                1.059
+5      161                   NA            NA <NA>           35 <NA>         NA          NA           NA                1.059
+6      533                   NA            NA <NA>           35 <NA>         NA          NA           NA                1.059
+> prediction <- predict(model, newdata=testdata)
+Error in model.frame.default(Terms, newdata, na.action = na.action, xlev = object$xlevels) : 
+  variable lengths differ (found for 'u_review_count')
+In addition: Warning message:
+'newdata' had 22956 rows but variables found have 229907 rows 
+> names(testdata)[names(testdata)=="review_count"] <- "u_review_count"
+> prediction <- predict(model, newdata=testdata)
+Error: variable 'u_avg_votes_useful' was fitted with type "numeric" but type "logical" was supplied
+> testdata <- subset(testdata, select = -c(u_avg_votes_useful.x) )
+> summary(testdata)
+       X                           user_id              date                        review_id         stars     
+ Min.   :    1   wqQ-50Sjf9ol3SYaPbA1YQ:   93   2013-02-20:  354   __pahYxcWwu05dPXxC_m5w:    1   Min.   :1.00  
+ 1st Qu.: 5740   ky75pkIL378HJbe-x0GwXA:   81   2013-02-26:  332   __Ph4Kj6a13aFaxq7zPzug:    1   1st Qu.:3.00  
+ Median :11478   kGgAARL2UmvCcTRfiscjug:   72   2013-02-18:  325   __uFLnzYUfE-mu82UU7evA:    1   Median :4.00  
+ Mean   :11478   1BW2HC851fJKPfJeQxjkTA:   58   2013-02-24:  310   _-c6weN5djKAnA_Hug7FPQ:    1   Mean   :3.77  
+ 3rd Qu.:17217   uZbTb-u-GVjTa2gtQfry5g:   57   2013-02-25:  302   _-K5y40uUfgutUziZq0SJg:    1   3rd Qu.:5.00  
+ Max.   :22956   ikm0UCahtK34LbLCEw4YTw:   53   2013-01-27:  281   _0-4_tUb2cr6W17HJ2f_ew:    1   Max.   :5.00  
+                 (Other)               :22542   (Other)   :21052   (Other)               :22950                 
+                                                                                 text          r_length      average_stars  
+ closed                                                                            :    5   Min.   :   1.0   Min.   :0.000  
+ Great service                                                                     :    3   1st Qu.: 243.0   1st Qu.:3.500  
+ Yummy                                                                             :    3   Median : 466.0   Median :3.780  
+ Good food                                                                         :    2   Mean   : 644.1   Mean   :3.741  
+ Great food! Great service!                                                        :    2   3rd Qu.: 844.0   3rd Qu.:4.040  
+ Pretty standard Jamba Juice.   Overpriced fruit, milk, sugar and ice in a blender.:    2   Max.   :4999.0   Max.   :5.000  
+ (Other)                                                                           :22939                    NA's   :9109   
+       name       u_review_count     type         votes_cool       votes_funny       votes_useful     u_avg_votes_useful.y
+ Michael :  198   Min.   :   1.0   user:13847   Min.   :    0.0   Min.   :    0.0   Min.   :    0.0   Min.   : 0.0000     
+ Jennifer:  151   1st Qu.:  24.0   NA's: 9109   1st Qu.:    2.0   1st Qu.:    2.0   1st Qu.:    9.0   1st Qu.: 0.9258     
+ Mike    :  130   Median :  35.0                Median :   11.0   Median :   10.0   Median :   35.0   Median : 1.0590     
+ Mark    :  124   Mean   :  81.9                Mean   :  217.4   Mean   :  168.7   Mean   :  315.8   Mean   : 1.3197     
+ David   :  123   3rd Qu.:  56.0                3rd Qu.:   66.0   3rd Qu.:   57.0   3rd Qu.:  159.0   3rd Qu.: 1.2500     
+ (Other) :13121   Max.   :2448.0                Max.   :11059.0   Max.   :11987.0   Max.   :12766.0   Max.   :26.9167     
+ NA's    : 9109                                 NA's   :9109      NA's   :9109      NA's   :9109                          
+> prediction <- predict(model, newdata=testdata)
+Error: variable 'u_avg_votes_useful' was fitted with type "numeric" but type "logical" was supplied
+> summary(model)
+
+Call:
+lm(formula = votes_useful ~ u_avg_votes_useful + r_length + u_review_count)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-22.347  -0.746  -0.146   0.534  69.960 
+
+Coefficients:
+                       Estimate   Std. Error t value            Pr(>|t|)    
+(Intercept)        -0.359339491  0.005771749  -62.26 <0.0000000000000002 ***
+u_avg_votes_useful  0.775294587  0.002111770  367.13 <0.0000000000000002 ***
+r_length            0.000475972  0.000005767   82.54 <0.0000000000000002 ***
+u_review_count      0.000607560  0.000018077   33.61 <0.0000000000000002 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.594 on 213430 degrees of freedom
+  (16473 observations deleted due to missingness)
+Multiple R-squared:  0.4951,	Adjusted R-squared:  0.4951 
+F-statistic: 6.976e+04 on 3 and 213430 DF,  p-value: < 0.00000000000000022
+
+> 
