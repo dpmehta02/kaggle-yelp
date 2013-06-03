@@ -2,6 +2,10 @@
 *.mat
 *.txt
 
+backup/yelp_training_set/*.csv
+yelp_test_set/*.csv
+yelp_training_set/*.csv
+
 *.py[cod]
 
 # C extensions
