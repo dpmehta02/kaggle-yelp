@@ -3,8 +3,14 @@
 *.txt
 
 backup/yelp_training_set/*.csv
+backup/yelp_test_set/*.csv
+backup/data/*.csv
+backup/*.csv
 yelp_test_set/*.csv
 yelp_training_set/*.csv
+linreg/*.csv
+linreg/*.mat
+
 
 *.py[cod]
 
