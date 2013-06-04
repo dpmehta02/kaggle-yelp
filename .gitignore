@@ -12,6 +12,14 @@ linreg/*.csv
 linreg/*.mat
 
 
+
+.DS_Store
+.Rhistory
+.RData
+.gitignore
+.Rapp.history
+.~lock.yelp_training_set_review.csv#
+
 *.py[cod]
 
 # C extensions
