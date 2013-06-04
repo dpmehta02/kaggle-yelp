@@ -12,8 +12,8 @@ fprintf('Loading and Visualizing Data ...\n')
 % unused: order(created by me) r_exclamations  u_review_count
 % add misspellings/grammar issues as categories?
 data = csvread('train.csv');
-X = data(1:170,2:5); % UPDATE BACK TO X = data(1:170000,2:5);
-y = data(1:170,1); % UPDATE BACK TO y = data(1:170000,1); 
+X = data(1:10000,2:5); % UPDATE BACK TO X = data(1:170000,2:5);
+y = data(1:10000,1); % UPDATE BACK TO y = data(1:170000,1); 
 
 testdata = csvread('test.csv');
 Xtest = testdata(:,2:5);
@@ -29,6 +29,7 @@ fprintf('Press enter to show plot 1.\n');
 pause;
 
 % Plot training data
+figure('Position',[100,107,1250,770]);
 plot(X(:,1), y, 'bo', 'MarkerSize', 10, 'LineWidth', 1.5);
 xlabel('Days active (review) (x)');
 ylabel('Votes useful (y)');
@@ -36,6 +37,7 @@ ylabel('Votes useful (y)');
 fprintf('Press enter to show plot 2.\n');
 pause;
 
+figure('Position',[100,107,1250,770]);
 plot(X(:,2), y, 'bo', 'MarkerSize', 10, 'LineWidth', 1.5);
 xlabel('Review length (x)');
 ylabel('Votes useful (y)');
@@ -43,6 +45,7 @@ ylabel('Votes useful (y)');
 fprintf('Press enter to show plot 3.\n');
 pause;
 
+figure('Position',[100,107,1250,770]);
 plot(X(:,3), y, 'bo', 'MarkerSize', 10, 'LineWidth', 1.5);
 xlabel('User avg votes useful (x)');
 ylabel('Votes useful (y)');
@@ -50,6 +53,7 @@ ylabel('Votes useful (y)');
 fprintf('Press enter to show plot 4.\n');
 pause;
 
+figure('Position',[100,107,1250,770]);
 plot(X(:,4), y, 'bo', 'MarkerSize', 10, 'LineWidth', 1.5);
 xlabel('AFINN sentiment score (x)');
 ylabel('Votes useful (y)');
@@ -85,13 +89,14 @@ lambda = 0;
 [theta] = trainLinearReg([ones(m, 1) X], y, lambda);
 
 %  Plot fit over the data
+figure('Position',[100,107,1250,770]);
 plot(X, y, 'bo', 'MarkerSize', 10, 'LineWidth', 1.5);
 xlabel('Inputs (x)');
 ylabel('Votes useful (y)');
 hold on;
 plot(X, [ones(m, 1) X]*theta, '--', 'LineWidth', 2)
 hold off;
-
+#}
 fprintf('Program paused. Press enter to plot learning curves.\n');
 pause;
 
@@ -103,18 +108,19 @@ lambda = 0;
                   [ones(size(Xval, 1), 1) Xval], yval, ...
                   lambda);
 
+figure('Position',[100,107,1250,770]);
 plot(1:m, error_train, 1:m, error_val);
 title('Learning curve for linear regression')
 legend('Train', 'Cross Validation')
 xlabel('Number of training examples')
 ylabel('Error')
-axis([0 13 0 150])
+axis([0 10000 0 50])
 
 fprintf('# Training Examples\tTrain Error\tCross Validation Error\n');
 for i = 1:m
     fprintf('  \t%d\t\t%f\t%f\n', i, error_train(i), error_val(i));
 end
-#}
+
 fprintf('Program paused. Press enter to continue.\n');
 pause;
 
@@ -196,6 +202,7 @@ pause;
     validationCurve(X_poly, y, X_poly_val, yval);
 
 close all;
+figure('Position',[100,107,1250,770]);
 plot(lambda_vec, error_train, lambda_vec, error_val);
 legend('Train', 'Cross Validation');
 xlabel('lambda');
