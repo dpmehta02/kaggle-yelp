@@ -12,8 +12,8 @@ fprintf('Loading and Visualizing Data ...\n')
 % unused: order(created by me) r_exclamations  u_review_count
 % add misspellings/grammar issues as categories?
 data = csvread('train.csv');
-X = data(1:10000,2:5); % UPDATE BACK TO X = data(1:170000,2:5);
-y = data(1:10000,1); % UPDATE BACK TO y = data(1:170000,1); 
+X = data(1:1000,2:5); % UPDATE BACK TO X = data(1:170000,2:5);
+y = data(1:1000,1); % UPDATE BACK TO y = data(1:170000,1); 
 
 testdata = csvread('test.csv');
 Xtest = testdata(:,2:5);
@@ -96,7 +96,7 @@ ylabel('Votes useful (y)');
 hold on;
 plot(X, [ones(m, 1) X]*theta, '--', 'LineWidth', 2)
 hold off;
-#}
+
 fprintf('Program paused. Press enter to plot learning curves.\n');
 pause;
 
@@ -109,50 +109,48 @@ lambda = 0;
                   lambda);
 
 figure('Position',[100,107,1250,770]);
-plot(1:m, error_train, 1:m, error_val);
+plot(1:m, error_train, '.', "markersize", 10, 1:m, error_val, '.', "markersize", 10);
 title('Learning curve for linear regression')
 legend('Train', 'Cross Validation')
 xlabel('Number of training examples')
 ylabel('Error')
-axis([0 10000 0 50])
+axis([0 100000 0 25])
 
 fprintf('# Training Examples\tTrain Error\tCross Validation Error\n');
 for i = 1:m
     fprintf('  \t%d\t\t%f\t%f\n', i, error_train(i), error_val(i));
 end
 
-fprintf('Program paused. Press enter to continue.\n');
+fprintf('Program paused. Press enter to map features for Polynomial Regression.\n');
 pause;
 
 %% =========== Part 6: Feature Mapping for Polynomial Regression =============
 
-% polynomial degree
-p = 2;
+% polynomial degree [ADJUST AS NECESSARY]
+p = 4;
 
 % Map X onto Polynomial Features and Normalize
-X_poly = polyFeatures(X, p);
+X_poly = polyFeatures(X(:,3), p); % Third column [ADJUST AS NECESSARY]
 [X_poly, mu, sigma] = featureNormalize(X_poly);  % Normalize
 X_poly = [ones(m, 1), X_poly];                   % Add Ones
 
 % Map X_poly_test and normalize (using mu and sigma)
-X_poly_test = polyFeatures(Xtest, p);
+X_poly_test = polyFeatures(Xtest(:,3), p); % Third column [ADJUST AS NECESSARY]
 X_poly_test = bsxfun(@minus, X_poly_test, mu);
 X_poly_test = bsxfun(@rdivide, X_poly_test, sigma);
 X_poly_test = [ones(size(X_poly_test, 1), 1), X_poly_test];         % Add Ones
 
 % Map X_poly_val and normalize (using mu and sigma)
-X_poly_val = polyFeatures(Xval, p);
+X_poly_val = polyFeatures(Xval(:,3), p); % Third column [ADJUST AS NECESSARY]
 X_poly_val = bsxfun(@minus, X_poly_val, mu);
 X_poly_val = bsxfun(@rdivide, X_poly_val, sigma);
 X_poly_val = [ones(size(X_poly_val, 1), 1), X_poly_val];           % Add Ones
 
 fprintf('Normalized Training Example 1:\n');
 fprintf('  %f  \n', X_poly(1, :));
-
-fprintf('\nProgram paused. Press enter to continue.\n');
+#}
+fprintf('\nProgram paused. Press enter to plot learning curve for polynomial regression.\n');
 pause;
-
-
 
 %% =========== Part 7: Learning Curve for Polynomial Regression =============
 %  Now, you will get to experiment with polynomial regression with multiple
