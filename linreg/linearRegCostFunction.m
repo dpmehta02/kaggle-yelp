@@ -18,7 +18,7 @@ h_theta = X * theta;
 % cost function
 J = 1 / (2 * m) * sum((h_theta - y) .^ 2);
 
-% the bias can't be regularizated... because it's a regularizator!
+% the bias can't be regularizated... because it's a regularizor!
 theta1 = [0 ; theta(2:size(theta), :)];
 
 % penalty (regularization)

@@ -1,69 +1,72 @@
-%% Machine Learning Online Class
-%  Exercise 5 | Regularized Linear Regression and Bias-Variance
-%
-%  Instructions
-%  ------------
-% 
-%  This file contains code that helps you get started on the
-%  exercise. You will need to complete the following functions:
-%
-%     linearRegCostFunction.m
-%     learningCurve.m
-%     validationCurve.m
-%
-%  For this exercise, you will not need to change any code in this file,
-%  or any other files other than those mentioned above.
-%
+% Regularized Linear Regression and Bias-Variance
 
 %% Initialization
 clear ; close all; clc
 
 %% =========== Part 1: Loading and Visualizing Data =============
-%  We start the exercise by first loading and visualizing the dataset. 
-%  The following code will load the dataset into your environment and plot
-%  the data.
-%
 
 % Load Training Data
 fprintf('Loading and Visualizing Data ...\n')
 
 % Load train/test data
-% You will have X, y, Xval, yval, Xtest, ytest in your environment
-data = readcsv('train.csv')
-X = data(:,2:8)
-y = data(:,1)
+% You need to define X, y, Xval, yval, Xtest, ytest
+% Fields: votes_useful  r_days_active   r_length  u_avg_votes_useful  sentiment
+% unused: order(created by me) r_exclamations  u_review_count
+data = csvread('train.csv');
+X = data(1:170000,2:5);
+y = data(1:170000,1);
 
-testdata = readcsv('test.csv')
-Xtest = testdata()
-ytest = testdata()
+testdata = csvread('test.csv');
+Xtest = testdata(:,2:5);
+ytest = testdata(:,1);
 
-% put 20% of train file in separate validation file, get test data in same format at train, then step through this file
+% get test data in same format as train, then step through this file
+% add misspellings as category?
 
-validationdata = readcsv('')
-Xval = validationdata()
-Yval = validationdata()
+Xval = data(170001:213435,2:5);
+Yval = data(170001:213435,1);
 
 % m = Number of examples
 m = size(X, 1);
 
 % Plot training data
-plot(X, y, 'rx', 'MarkerSize', 10, 'LineWidth', 1.5);
-xlabel('Change in water level (x)');
-ylabel('Water flowing out of the dam (y)');
+plot(X(:,1), y, 'rx', 'MarkerSize', 10, 'LineWidth', 1.5);
+xlabel('Days active (review) (x)');
+ylabel('Votes useful (y)');
+
+fprintf('Program paused. Press enter to continue.\n');
+pause;
+
+% Plot training data
+plot(X(:,2), y, 'rx', 'MarkerSize', 10, 'LineWidth', 1.5);
+xlabel('Review length (x)');
+ylabel('Votes useful (y)');
+
+fprintf('Program paused. Press enter to continue.\n');
+pause;
+
+% Plot training data
+plot(X(:,3), y, 'rx', 'MarkerSize', 10, 'LineWidth', 1.5);
+xlabel('User avg votes useful (x)');
+ylabel('Votes useful (y)');
+
+fprintf('Program paused. Press enter to continue.\n');
+pause;
+
+% Plot training data
+plot(X(:,4), y, 'rx', 'MarkerSize', 10, 'LineWidth', 1.5);
+xlabel('AFINN sentiment score (x)');
+ylabel('Votes useful (y)');
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
 
 %% =========== Part 2: Regularized Linear Regression Cost =============
-%  You should now implement the cost function for regularized linear 
-%  regression. 
-%
 
 theta = [1 ; 1];
 J = linearRegCostFunction([ones(m, 1) X], y, theta, 1);
 
-fprintf(['Cost at theta = [1 ; 1]: %f '...
-         '\n(this value should be about 303.993192)\n'], J);
+fprintf(['Cost at theta = [1 ; 1]: %f '], J);
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;

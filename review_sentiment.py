@@ -27,7 +27,7 @@ def main():
     if line != []:
       text_line = line[0].split()
       for word in text_line:
-        # only read alphanumeric words (NEED TO LOWERCASE?)
+        # only read alphanumeric words
         if re.match("^[A-Za-z0-9_-]*$", word):
           score += scores.get(word, 0)
     f.write("%i\n" % score)
