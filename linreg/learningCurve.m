@@ -17,7 +17,7 @@ error_train = zeros(m, 1);
 error_val   = zeros(m, 1);
 
 % for every j cases (1:j:m, can adjust to be more/less precise)
-for i = 1:2500:m
+for i = 1:10000:m
 
 	% for each training step, the training set must contains 1 to m 
 	Xtrain = X(1:i,:);

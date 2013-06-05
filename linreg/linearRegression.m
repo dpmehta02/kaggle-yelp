@@ -12,15 +12,15 @@ fprintf('Loading and Visualizing Data ...\n')
 % unused: order(created by me) r_exclamations  u_review_count
 % add misspellings/grammar issues as categories?
 data = csvread('train.csv');
-X = data(1:1000,2:5); % UPDATE BACK TO X = data(1:170000,2:5);
-y = data(1:1000,1); % UPDATE BACK TO y = data(1:170000,1); 
+X = data(1:170000,2:5);
+y = data(1:170000,1);
 
 testdata = csvread('test.csv');
 Xtest = testdata(:,2:5);
 ytest = testdata(:,1);
 
-Xval = data(213200:213435,2:5); % UPDATE BACK TO Xval = data(170001:213435,2:5);
-yval = data(213200:213435,1); % UPDATE BACK TO yval = data(170001:213435,1);
+Xval = data(170001:213435,2:5);
+yval = data(170001:213435,1);
 
 % m = Number of examples
 m = size(X, 1);
@@ -109,57 +109,53 @@ lambda = 0;
                   lambda);
 
 figure('Position',[100,107,1250,770]);
-plot(1:m, error_train, '.', "markersize", 10, 1:m, error_val, '.', "markersize", 10);
+plot(1:m, error_train, '.', 'markersize', 10, 1:m, error_val, '.', 'markersize', 10);
 title('Learning curve for linear regression')
 legend('Train', 'Cross Validation')
 xlabel('Number of training examples')
 ylabel('Error')
-axis([0 100000 0 25])
+axis([0 180000 0 10])
 
 fprintf('# Training Examples\tTrain Error\tCross Validation Error\n');
-for i = 1:m
+for i = 1:10000:m
     fprintf('  \t%d\t\t%f\t%f\n', i, error_train(i), error_val(i));
 end
-
+#}
 fprintf('Program paused. Press enter to map features for Polynomial Regression.\n');
 pause;
 
 %% =========== Part 6: Feature Mapping for Polynomial Regression =============
 
 % polynomial degree [ADJUST AS NECESSARY]
-p = 4;
+p = 3;
 
 % Map X onto Polynomial Features and Normalize
-X_poly = polyFeatures(X(:,3), p); % Third column [ADJUST AS NECESSARY]
+X_poly = polyFeatures(X(:,3), p); % user average votes useful [ADJUST AS NECESSARY]
 [X_poly, mu, sigma] = featureNormalize(X_poly);  % Normalize
 X_poly = [ones(m, 1), X_poly];                   % Add Ones
 
 % Map X_poly_test and normalize (using mu and sigma)
-X_poly_test = polyFeatures(Xtest(:,3), p); % Third column [ADJUST AS NECESSARY]
+X_poly_test = polyFeatures(Xtest(:,3), p); % user average votes useful [ADJUST AS NECESSARY]
 X_poly_test = bsxfun(@minus, X_poly_test, mu);
 X_poly_test = bsxfun(@rdivide, X_poly_test, sigma);
 X_poly_test = [ones(size(X_poly_test, 1), 1), X_poly_test];         % Add Ones
 
 % Map X_poly_val and normalize (using mu and sigma)
-X_poly_val = polyFeatures(Xval(:,3), p); % Third column [ADJUST AS NECESSARY]
+X_poly_val = polyFeatures(Xval(:,3), p); % user average votes useful [ADJUST AS NECESSARY]
 X_poly_val = bsxfun(@minus, X_poly_val, mu);
 X_poly_val = bsxfun(@rdivide, X_poly_val, sigma);
 X_poly_val = [ones(size(X_poly_val, 1), 1), X_poly_val];           % Add Ones
 
 fprintf('Normalized Training Example 1:\n');
 fprintf('  %f  \n', X_poly(1, :));
-#}
+
 fprintf('\nProgram paused. Press enter to plot learning curve for polynomial regression.\n');
 pause;
 
 %% =========== Part 7: Learning Curve for Polynomial Regression =============
-%  Now, you will get to experiment with polynomial regression with multiple
-%  values of lambda. The code below runs polynomial regression with 
-%  lambda = 0. You should try running the code with different values of
-%  lambda to see how the fit and learning curve change.
-%
 
-lambda = 1;
+% [ADJUST AS NECESSARY]
+lambda = 0;
 [theta] = trainLinearReg(X_poly, y, lambda);
 
 % Plot training data and fit
@@ -191,10 +187,6 @@ fprintf('Program paused. Press enter to continue.\n');
 pause;
 
 %% =========== Part 8: Validation for Selecting Lambda =============
-%  You will now implement validationCurve to test various values of 
-%  lambda on a validation set. You will then use this to select the
-%  "best" lambda value.
-%
 
 [lambda_vec, error_train, error_val] = ...
     validationCurve(X_poly, y, X_poly_val, yval);
