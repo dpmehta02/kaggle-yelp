@@ -130,21 +130,36 @@ pause;
 p = 3;
 
 % Map X onto Polynomial Features and Normalize
-X_poly = polyFeatures(X(:,3), p); % user average votes useful [ADJUST AS NECESSARY]
-[X_poly, mu, sigma] = featureNormalize(X_poly);  % Normalize
-X_poly = [ones(m, 1), X_poly];                   % Add Ones
+X_poly                          = polyFeatures(X(:,3), p); % user average votes useful [ADJUST AS NECESSARY]
+[X_poly, mu, sigma]             = featureNormalize(X_poly);
+[days_active_norm, mu2, sigma2] = featureNormalize(X(:,1));
+[length_norm, mu3, sigma3]      = featureNormalize(X(:,2));
+[sentiment_norm, mu4, sigma4]   = featureNormalize(X(:,4));
+X_poly = [ones(m, 1), X_poly, days_active_norm, length_norm, sentiment_norm]; % Add Ones
 
 % Map X_poly_test and normalize (using mu and sigma)
-X_poly_test = polyFeatures(Xtest(:,3), p); % user average votes useful [ADJUST AS NECESSARY]
-X_poly_test = bsxfun(@minus, X_poly_test, mu);
-X_poly_test = bsxfun(@rdivide, X_poly_test, sigma);
-X_poly_test = [ones(size(X_poly_test, 1), 1), X_poly_test];         % Add Ones
+X_poly_test           = polyFeatures(Xtest(:,3), p); % user average votes useful [ADJUST AS NECESSARY]
+X_poly_test           = bsxfun(@minus,   X_poly_test,           mu);
+X_poly_test           = bsxfun(@rdivide, X_poly_test,           sigma);
+days_active_norm_test = bsxfun(@minus,   Xtest(:,1),            mu2);
+days_active_norm_test = bsxfun(@rdivide, days_active_norm_test, sigma2);
+length_norm_test      = bsxfun(@minus,   Xtest(:,2),            mu3);
+length_norm_test      = bsxfun(@rdivide, length_norm_test,      sigma3);
+sentiment_norm_test   = bsxfun(@minus,   Xtest(:,4),            mu4);
+sentiment_norm_test   = bsxfun(@rdivide, sentiment_norm_test,   sigma4);
+X_poly_test = [ones(size(X_poly_test, 1), 1), X_poly_test, days_active_norm_test, length_norm_test, sentiment_norm_test]; % Add Ones
 
 % Map X_poly_val and normalize (using mu and sigma)
-X_poly_val = polyFeatures(Xval(:,3), p); % user average votes useful [ADJUST AS NECESSARY]
-X_poly_val = bsxfun(@minus, X_poly_val, mu);
-X_poly_val = bsxfun(@rdivide, X_poly_val, sigma);
-X_poly_val = [ones(size(X_poly_val, 1), 1), X_poly_val];           % Add Ones
+X_poly_val           = polyFeatures(Xval(:,3), p); % user average votes useful [ADJUST AS NECESSARY]
+X_poly_val           = bsxfun(@minus,   X_poly_val,           mu);
+X_poly_val           = bsxfun(@rdivide, X_poly_val,           sigma);
+days_active_norm_val = bsxfun(@minus,   Xval(:,1),            mu2);
+days_active_norm_val = bsxfun(@rdivide, days_active_norm_val, sigma2);
+length_norm_val      = bsxfun(@minus,   Xval(:,2),            mu3);
+length_norm_val      = bsxfun(@rdivide, length_norm_val,      sigma3);
+sentiment_norm_val   = bsxfun(@minus,   Xval(:,4),            mu4);
+sentiment_norm_val   = bsxfun(@rdivide, sentiment_norm_val,   sigma4);
+X_poly_val = [ones(size(X_poly_val, 1), 1), X_poly_val, days_active_norm_val, length_norm_val, sentiment_norm_val]; % Add Ones
 
 fprintf('Normalized Training Example 1:\n');
 fprintf('  %f  \n', X_poly(1, :));
