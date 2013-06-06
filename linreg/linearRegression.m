@@ -150,15 +150,15 @@ sentiment_norm_test   = bsxfun(@rdivide, sentiment_norm_test,   sigma4);
 X_poly_test = [ones(size(X_poly_test, 1), 1), X_poly_test, days_active_norm_test, length_norm_test, sentiment_norm_test]; % Add Ones
 
 % Map X_poly_val and normalize (using mu and sigma)
-X_poly_val           = polyFeatures(Xval(:,3), p); % user average votes useful [ADJUST AS NECESSARY]
-X_poly_val           = bsxfun(@minus,   X_poly_val,           mu);
-X_poly_val           = bsxfun(@rdivide, X_poly_val,           sigma);
-days_active_norm_val = bsxfun(@minus,   Xval(:,1),            mu2);
-days_active_norm_val = bsxfun(@rdivide, days_active_norm_val, sigma2);
-length_norm_val      = bsxfun(@minus,   Xval(:,2),            mu3);
-length_norm_val      = bsxfun(@rdivide, length_norm_val,      sigma3);
-sentiment_norm_val   = bsxfun(@minus,   Xval(:,4),            mu4);
-sentiment_norm_val   = bsxfun(@rdivide, sentiment_norm_val,   sigma4);
+X_poly_val            = polyFeatures(Xval(:,3), p); % user average votes useful [ADJUST AS NECESSARY]
+X_poly_val            = bsxfun(@minus,   X_poly_val,           mu);
+X_poly_val            = bsxfun(@rdivide, X_poly_val,           sigma);
+days_active_norm_val  = bsxfun(@minus,   Xval(:,1),            mu2);
+days_active_norm_val  = bsxfun(@rdivide, days_active_norm_val, sigma2);
+length_norm_val       = bsxfun(@minus,   Xval(:,2),            mu3);
+length_norm_val       = bsxfun(@rdivide, length_norm_val,      sigma3);
+sentiment_norm_val    = bsxfun(@minus,   Xval(:,4),            mu4);
+sentiment_norm_val    = bsxfun(@rdivide, sentiment_norm_val,   sigma4);
 X_poly_val = [ones(size(X_poly_val, 1), 1), X_poly_val, days_active_norm_val, length_norm_val, sentiment_norm_val]; % Add Ones
 
 fprintf('Normalized Training Example 1:\n');
@@ -174,29 +174,29 @@ lambda = 0;
 [theta] = trainLinearReg(X_poly, y, lambda);
 
 % Plot training data and fit
-%figure('Position',[100,107,1250,770]);
+figure('Position',[100,107,1250,770]);
 figure(1);
-plot(X(:,3), y, 'bo', 'MarkerSize', 10, 'LineWidth', 1.5);
-%plotFit(min(X(:,3)), max(X(:,3)), mu, sigma, theta, p);
+plot(X, y, 'ox', 'MarkerSize', 1, 'LineWidth', 1.5);
+%plotFit(min(X(:,3)), max(X(:,3)), mu, sigma, theta, p, mu2, sigma2, mu3, sigma3, mu4, sigma4, X(:,1), X(:,2), X(:,4));
+axis([0 25 0 25])
 xlabel('Inputs (x)');
 ylabel('Votes useful (y)');
 title (sprintf('Polynomial Regression Fit (lambda = %f)', lambda));
 
 figure('Position',[100,107,1250,770]);
 figure(2);
-[error_train, error_val] = ...
-    learningCurve(X_poly, y, X_poly_val, yval, lambda);
-plot(1:m, error_train, 1:m, error_val);
+[error_train, error_val] = learningCurve(X_poly, y, X_poly_val, yval, lambda);
+plot(1:m, error_train, '.', 'markersize', 10, 1:m, error_val, '.', 'markersize', 10);
 
 title(sprintf('Polynomial Regression Learning Curve (lambda = %f)', lambda));
 xlabel('Number of training examples')
 ylabel('Error')
-axis([0 13 0 100])
+axis([0 180000 0 10])
 legend('Train', 'Cross Validation')
 
 fprintf('Polynomial Regression (lambda = %f)\n\n', lambda);
 fprintf('# Training Examples\tTrain Error\tCross Validation Error\n');
-for i = 1:m
+for i = 1:10000:m
     fprintf('  \t%d\t\t%f\t%f\n', i, error_train(i), error_val(i));
 end
 
@@ -221,5 +221,5 @@ for i = 1:length(lambda_vec)
             lambda_vec(i), error_train(i), error_val(i));
 end
 
-fprintf('Program paused. Press enter to continue.\n');
+fprintf('Press enter to exit.\n');
 pause;
