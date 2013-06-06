@@ -239,6 +239,7 @@ fprintf('Press enter to generate a submission file called "KaggleSubmission.csv"
 
 test_prediction = X_poly_test * theta;
 
+% "votes_useful","r_days_active","r_length","u_avg_votes_useful.y","sentiment"
 % replace negatives with 0s
 for i = 1:length(test_prediction)
   if test_prediction(i,1) < 0
