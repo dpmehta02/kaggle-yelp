@@ -120,10 +120,10 @@ fprintf('# Training Examples\tTrain Error\tCross Validation Error\n');
 for i = 1:10000:m
     fprintf('  \t%d\t\t%f\t%f\n', i, error_train(i), error_val(i));
 end
-#}
+
 fprintf('Program paused. Press enter to map features for Polynomial Regression.\n');
 pause;
-
+#}
 %% =========== Part 6: Feature Mapping for Polynomial Regression =============
 
 % polynomial degree [ADJUST AS NECESSARY]
@@ -172,7 +172,7 @@ pause;
 % [ADJUST AS NECESSARY]
 lambda = 0.1;
 [theta] = trainLinearReg(X_poly, y, lambda);
-
+#{
 % Plot training data and fit
 figure('Position',[100,107,1250,770]);
 figure(1);
@@ -225,14 +225,27 @@ end
 fprintf('Press enter to calculate test set error.\n');
 pause;
 
-%% =========== Part 10: Compute Test Set Error =============
+%% =========== Part 9: Compute Test Set Error =============
 
 % compute the test error using the best value of lambda.
 [theta] = trainLinearReg(X_poly, y, lambda);
 error_test = linearRegCostFunction(X_poly_test, ytest, theta, 0);
 fprintf('test error: %f\n', error_test);
 pause;
-fprintf('Press enter to finish.\n');
+fprintf('Press enter to generate a submission file called "KaggleSubmission.csv".\n');
+#}
 
 %% =========== Part 10: Generate Kaggle Submission =============
+
+test_prediction = X_poly_test * theta;
+
+% replace negatives with 0s
+for i = 1:length(test_prediction)
+  if test_prediction(i,1) < 0
+    test_prediction(i,1) = 0;
+  end
+end
+
+dlmwrite('KaggleSubmission.csv', test_prediction, 'delimiter', ',', 'newline', '\n');
+
 
