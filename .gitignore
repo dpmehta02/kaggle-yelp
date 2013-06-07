@@ -11,7 +11,7 @@ yelp_training_set/*.csv
 linreg/*.csv
 linreg/*.mat
 
-
+.~lock.test_reviews.csv#
 
 .DS_Store
 .Rhistory
