@@ -36,7 +36,7 @@ pause;
 
 fprintf('\nTraining One-vs-All Logistic Regression...\n')
 
-lambda = 1;
+lambda = 0;
 [all_theta] = oneVsAll(X, y, num_labels, lambda);
 
 pred = predictOneVsAll(all_theta, X);
