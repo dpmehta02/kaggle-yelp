@@ -29,7 +29,7 @@ yval = data(170001:213434,1);
 % m = Number of examples
 m = size(X, 1);
 
-fprintf('Program paused. Press enter to vectorize logistic regression.\n');
+fprintf('Program paused. Press enter to train logistic regression.\n');
 pause;
 
 %% ============ Part 2: Vectorize Logistic Regression ============
