@@ -9,14 +9,11 @@ def main():
   # Initialize
   tdm = textmining.TermDocumentMatrix()
   
-  for line in open('yelp_training_set_review.csv', 'r'):
+  for line in open('train_plus_test_reviews.csv', 'r'):
     # Add each review
     tdm.add_doc(line)
-    # Write out the matrix to a csv file. Note that setting cutoff=1 means
-    # that words which appear in 1 or more documents will be included in
-    # the output (i.e. every word will appear in the output). The default
-    # for cutoff is 2, since we usually aren't interested in words which
-    # appear in a single document.
+    # Write out the matrix to a csv file. Cutoff is words
+    # which appear in x or more documents
     tdm.write_csv('matrix.csv', cutoff=2)
 
 if __name__ == '__main__':
