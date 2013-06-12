@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 # @dpmehta02
-# Count characters for each record in file
-# USAGE: $ python countOccurrences.py <reviews_file>
+# Count characters for each record in a csv file
 
 import sys
 import csv
@@ -19,7 +18,6 @@ def main():
   for i in range(len(data)):
     if data[i] != []:
       f.write("%i\n" % data[i].count(","))
-
 
 if __name__ == '__main__':
   main()
