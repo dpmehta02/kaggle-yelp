@@ -11,7 +11,7 @@ import re
 
 def main():
 
-  content = open("test.csv", "r").read().replace('\r\n','\n')
+  content = open("test.csv", "r").read().replace('\r\n','\n').replace('')
 
   with open("processed_comments.csv", "w") as g:
     g.write(content)
