@@ -8,11 +8,12 @@ import re
 
 def main():
 
-  f = open('yelp_training_set_review.csv', 'r')
+  #outputting a few too many records, need to debug on smaller file
+  f = open('yelp_test_set_review.csv', 'r')
   data = f.readlines()
   f.close()
 
-  f = open('train_commmas.txt', 'w')
+  f = open('test_commmas.txt', 'w')
 
   for i in range(len(data)):
     if data[i] != [] and data[i][0] == '\"':
