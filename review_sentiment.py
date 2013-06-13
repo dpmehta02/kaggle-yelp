@@ -3,7 +3,7 @@
 # @dpmehta02
 # Analyze Yelp reviews for sentiment (negativity/positivity)
 # Requires sentiment file (e.g., AFINN-111.txt: https://code.google.com/p/fb-moody/source/browse/trunk/AFINN/AFINN-111.txt?spec=svn2&r=2)
-# USAGE: $ python review_sentiment.py <sentiment_file> <tweet_file>
+# USAGE: $ python review_sentiment.py <sentiment_file> <reviews_file>
 
 import sys
 import csv
