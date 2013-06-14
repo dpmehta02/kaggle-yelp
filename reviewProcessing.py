@@ -22,7 +22,7 @@ def processReviews(json_file):
     scores[term] = int(score)
 
   # write headers
-  f.write("comma_count,word_count,average_word_length,sentence_count,smilies,sentiment\n")
+  f.write("comma_count,word_count,average_word_length,sentence_count,smilies,sentiment,character_count\n")
   
   # load/process the reviews
   for line in open(json_file):
@@ -38,7 +38,7 @@ def processReviews(json_file):
       
       # factored out for clarity
       utf_review = review_json['text'].encode('utf8')
-      
+      character_count = len(utf_review)
       comma_count = utf_review.count(',')
       word_count = len(utf_review.split())
       # naive: assumes each ., ? and ! ends a sentence
@@ -59,8 +59,8 @@ def processReviews(json_file):
       else:
         average_word_length = float(sum(len(word) for word in filtered))/len(filtered)
     
-    f.write("%i,%i,%f,%i,%i,%i\n" % (comma_count, word_count, average_word_length,
-                                     sentence_count,smilies,sentiment))
+    f.write("%i,%i,%f,%i,%i,%i,%i\n" % (comma_count, word_count, average_word_length,
+                                     sentence_count,smilies,sentiment,character_count))
   f.close()
 
 
