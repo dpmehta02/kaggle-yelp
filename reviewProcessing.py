@@ -46,8 +46,11 @@ def processReviews(json_file):
       votes_useful = review_json['votes']['useful']
 
     review_date = datetime.strptime(review_json['date'].encode('utf8'),"%Y-%m-%d")
-    print review_date
-    days_active = (datetime(2013, 01, 19) - review_date).days
+    # dates differ for train/test. only train has votes
+    if review_json.get('votes'):
+      days_active = (datetime(2013, 01, 19) - review_date).days
+    else:
+      days_active = (datetime(2013, 03, 12) - review_date).days
 
     # if the review isn't blank
     if review_json['text'] != '':
