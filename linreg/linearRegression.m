@@ -24,7 +24,7 @@ yval = data(170001:213435,1);
 
 % m = Number of examples
 m = size(X, 1);
-#{
+
 fprintf('Press enter to show plot 1.\n');
 pause;
 
@@ -57,28 +57,6 @@ figure('Position',[100,107,1250,770]);
 plot(X(:,4), y, 'bo', 'MarkerSize', 10, 'LineWidth', 1.5);
 xlabel('AFINN sentiment score (x)');
 ylabel('Votes useful (y)');
-
-fprintf('Program paused. Press enter to calculate cost function.\n');
-pause;
-
-%% =========== Part 2: Regularized Linear Regression Cost =============
-
-theta = [1 ; 1 ; 1 ; 1 ; 1];
-J = linearRegCostFunction([ones(m, 1) X], y, theta, 1);
-
-fprintf(['Cost at theta (where lambda = 1) = [1 ; 1 ; 1 ; 1 ; 1]: %f \n'], J);
-
-fprintf('Program paused. Press enter to calculate gradient.\n');
-pause;
-
-%% =========== Part 3: Regularized Linear Regression Gradient =============
-
-theta = [1 ; 1 ; 1 ; 1 ; 1];
-[J, grad] = linearRegCostFunction([ones(m, 1) X], y, theta, 1);
-
-fprintf(['Gradient at theta (where lambda = 1) = [1 ; 1 ; 1 ; 1 ; 1]:'...
-         '  [%f; %f; %f; %f; %f] \n'], ...
-         grad(1), grad(2), grad(3), grad(4), grad(5));
 
 fprintf('Program paused. Press enter to train linear regression.\n');
 pause;
@@ -123,7 +101,7 @@ end
 
 fprintf('Program paused. Press enter to map features for Polynomial Regression.\n');
 pause;
-#}
+
 %% =========== Part 6: Feature Mapping for Polynomial Regression =============
 
 % polynomial degree [ADJUST AS NECESSARY]
