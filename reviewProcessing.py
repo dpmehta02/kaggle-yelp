@@ -6,13 +6,16 @@
 # Usage: $ python reviewProcessing.py <input_file>.json <output_file>
 ########################################################################
 
-# TODO - REENGINEER ORIGINAL FEATURES (REPLACE MISSING WITH MEAN OR MEDIAN?),
-# TRAIN RANDOM FOREST HERE SKLEARN, 
+# TODO - add user avg votes useful (REPLACE MISSING WITH MEAN OR MEDIAN?)
+#   add dict of avg votes useful scores, append via lookup, also add user id
+# visualize new data
+# TRAIN RANDOM FOREST REGRESSION HERE SKLEARN, 
 # GENERATE SUBMISSION
 # THEN, UPLOAD TO OCTAVE AND RUN LINEAR REGRESSION, ONE-VS-ALL, ...
 # TRAIN ALGO WITH AND WITHOUT AVG VOTES USEFUL, APPLY TWO DIFFERENT ALGOS TO TEST SET
+# delete trailing newline char from file
 
-from datetime import date, datetime
+from datetime import datetime
 import json
 import re
 import sys
@@ -46,7 +49,7 @@ def processReviews(json_file):
       votes_useful = review_json['votes']['useful']
 
     review_date = datetime.strptime(review_json['date'].encode('utf8'),"%Y-%m-%d")
-    # dates differ for train/test. only train has votes
+    # dates differ for train/test sets
     if review_json.get('votes'):
       days_active = (datetime(2013, 01, 19) - review_date).days
     else:
