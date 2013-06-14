@@ -4,6 +4,10 @@
 # Output commas, words, and word length for each yelp review
 # Usage: $ python reviewProcessing.py <input_file>.json <output_file>
 
+
+# TODO - REENGINEER ORIGINAL FEATURES (REPLACE MISSING WITH MEAN OR MEDIAN?), TRAIN RANDOM FOREST HERE SKLEARN, GENERATE SUBMISSION
+# THEN, UPLOAD TO OCTAVE AND RUN LINEAR REGRESSION, ONE-VS-ALL, ...
+
 import json
 import re
 import sys
