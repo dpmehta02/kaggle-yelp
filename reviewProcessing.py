@@ -21,7 +21,7 @@ def processReviews(json_file):
     term, score  = line.split("\t")
     scores[term] = int(score)
 
-  # write headers
+  # write headers (ADD POOR GRAMMAR, POOR SPELLING?)
   f.write("comma_count,word_count,average_word_length,sentence_count,smilies,sentiment,character_count\n")
   
   # load/process the reviews
