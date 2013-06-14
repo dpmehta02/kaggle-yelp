@@ -12,6 +12,7 @@
 # THEN, UPLOAD TO OCTAVE AND RUN LINEAR REGRESSION, ONE-VS-ALL, ...
 # TRAIN ALGO WITH AND WITHOUT AVG VOTES USEFUL, APPLY TWO DIFFERENT ALGOS TO TEST SET
 
+from datetime import date, datetime
 import json
 import re
 import sys
@@ -29,12 +30,12 @@ def processReviews(json_file):
     scores[term] = int(score)
 
   # write headers (ADD POOR GRAMMAR, POOR SPELLING?)
-  f.write("votes_useful,comma_count,word_count,average_word_length,sentence_count,smilies,sentiment,character_count\n")
+  f.write("votes_useful,days_active,comma_count,word_count,average_word_length,sentence_count,smilies,sentiment,character_count\n")
   
   # load/process the reviews
   for line in open(json_file):
     review_json = json.loads(line)
-    
+
     # default values
     average_word_length = 0
     sentiment = 0
@@ -43,6 +44,10 @@ def processReviews(json_file):
     # if the review has voting data
     if review_json.get('votes'):
       votes_useful = review_json['votes']['useful']
+
+    review_date = datetime.strptime(review_json['date'].encode('utf8'),"%Y-%m-%d")
+    print review_date
+    days_active = (datetime(2013, 01, 19) - review_date).days
 
     # if the review isn't blank
     if review_json['text'] != '':
@@ -71,7 +76,7 @@ def processReviews(json_file):
       else:
         average_word_length = float(sum(len(word) for word in filtered))/len(filtered)
     
-    f.write("%i,%i,%i,%f,%i,%i,%i,%i\n" % (votes_useful, comma_count, word_count,
+    f.write("%i,%i,%i,%i,%f,%i,%i,%i,%i\n" % (votes_useful, days_active, comma_count, word_count,
                                            average_word_length, sentence_count, smilies,
                                            sentiment,character_count))
   f.close()
