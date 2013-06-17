@@ -33,7 +33,7 @@ def processReviews(json_file):
     scores[term] = int(score)
 
   # write headers (ADD POOR GRAMMAR, POOR SPELLING?)
-  f.write("votes_useful,days_active,comma_count,word_count,average_word_length,sentence_count,smilies,sentiment,character_count\n")
+  f.write("user_id,votes_useful,days_active,comma_count,word_count,average_word_length,sentence_count,smilies,sentiment,character_count\n")
   
   # load/process the reviews
   for line in open(json_file):
@@ -43,6 +43,7 @@ def processReviews(json_file):
     average_word_length = 0
     sentiment = 0
     votes_useful = 0
+    user_id = review_json['user_id']
 
     # if the review has voting data
     if review_json.get('votes'):
@@ -82,16 +83,25 @@ def processReviews(json_file):
       else:
         average_word_length = float(sum(len(word) for word in filtered))/len(filtered)
     
-    f.write("%i,%i,%i,%i,%f,%i,%i,%i,%i\n" % (votes_useful, days_active, comma_count, word_count,
-                                           average_word_length, sentence_count, smilies,
-                                           sentiment,character_count))
+    f.write("%s,%i,%i,%i,%i,%f,%i,%i,%i,%i\n" % (user_id, votes_useful, days_active,
+                                                 comma_count, word_count, average_word_length,
+                                                 sentence_count, smilies, sentiment, 
+                                                 character_count))
   f.close()
 
 
+
+
+
+
+
 def main():
-  # process the reviews
   processReviews(sys.argv[1])
   return 0
+
+
+
+
 
 if __name__ == '__main__':
   main()
