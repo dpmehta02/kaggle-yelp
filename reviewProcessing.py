@@ -36,6 +36,7 @@ def processReviews(json_file):
   f.write("user_id,votes_useful,days_active,comma_count,word_count,average_word_length,sentence_count,smilies,sentiment,character_count,user_average_stars\n")
   
   # user_data[user_id] = (average_stars, review_count, avg_votes_useful)
+  # LEFT OFF HERE
   user_data = {}
   # load/process user data for training set
   for line in open("./yelp_training_set_json/yelp_training_set_user.json"):
