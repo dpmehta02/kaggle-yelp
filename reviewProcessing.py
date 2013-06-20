@@ -43,6 +43,8 @@ def processReviews(json_file):
     average_word_length = 0
     sentiment = 0
     votes_useful = 0
+    sentence_count = 0
+    smilies = 0
     user_id = review_json['user_id']
     
     # user_data[user_id] = (average_stars, review_count, avg_votes_useful)
