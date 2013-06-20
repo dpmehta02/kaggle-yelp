@@ -45,6 +45,7 @@ def processReviews(json_file):
     votes_useful = 0
     sentence_count = 0
     smilies = 0
+    character_count = 0
     user_id = review_json['user_id']
     
     # user_data[user_id] = (average_stars, review_count, avg_votes_useful)
@@ -109,10 +110,15 @@ def processReviews(json_file):
       else:
         average_word_length = float(sum(len(word) for word in filtered))/len(filtered)
 
+    if user_id not in user_data:
+      user_avg_stars = 0
+    else:
+      user_avg_stars = user_data[user_id][0]
+
     f.write("%s,%i,%i,%i,%i,%f,%i,%i,%i,%i,%.2f\n" % (user_id, votes_useful, days_active,
                                                  comma_count, word_count, average_word_length,
                                                  sentence_count, smilies, sentiment, 
-                                                 character_count, user_data[user_id][0]))
+                                                 character_count, user_avg_stars))
   f.close()
 
 
