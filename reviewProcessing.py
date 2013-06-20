@@ -7,7 +7,6 @@
 ########################################################################
 
 # TODO - add user avg votes useful (REPLACE MISSING WITH MEAN OR MEDIAN?)
-#   add dict of avg votes useful scores, append via lookup
 # visualize new data
 # TRAIN RANDOM FOREST REGRESSION HERE SKLEARN, 
 # GENERATE SUBMISSION
@@ -25,7 +24,7 @@ def processReviews(json_file):
   # open output file
   f = open(sys.argv[2], 'w')
   
-  # load a tab delimited dict of sentiment scores
+  # load sentiment score dict
   afinnfile = open('AFINN-111.txt')
   scores = {}
   for line in afinnfile:
@@ -34,23 +33,6 @@ def processReviews(json_file):
 
   # write headers (ADD POOR GRAMMAR, POOR SPELLING?)
   f.write("user_id,votes_useful,days_active,comma_count,word_count,average_word_length,sentence_count,smilies,sentiment,character_count,user_average_stars\n")
-  
-  # user_data[user_id] = (average_stars, review_count, avg_votes_useful)
-  # LEFT OFF HERE
-  user_data = {}
-  # load/process user data for training set
-  for line in open("./yelp_training_set_json/yelp_training_set_user.json"):
-    user_json = json.loads(line)
-    if user_json.get('votes'):
-      user_average_stars = float(user_json['average_stars'])
-      user_review_count = user_json['review_count']
-      user_avg_votes_useful = float(user_json['votes']['useful'] / user_review_count)
-      user_data[user_json['user_id']] = (user_average_stars, user_review_count, user_avg_votes_useful)
-
-  # load/process user data for test set
-  else:
-    pass
-
 
   # load/process the reviews
   for line in open(json_file):
@@ -61,18 +43,41 @@ def processReviews(json_file):
     sentiment = 0
     votes_useful = 0
     user_id = review_json['user_id']
-
-    # if the review has voting data
-    if review_json.get('votes'):
-      votes_useful = review_json['votes']['useful']
+    
+    # user_data[user_id] = (average_stars, review_count, avg_votes_useful)
+    user_data = {}
 
     review_date = datetime.strptime(review_json['date'].encode('utf8'),"%Y-%m-%d")
+    
     # training set
     if review_json.get('votes'):
+      votes_useful = review_json['votes']['useful']
       days_active = (datetime(2013, 01, 19) - review_date).days
+      # load/process user data
+      for line in open("./yelp_training_set_json/yelp_training_set_user.json"):
+        user_json = json.loads(line)
+        user_average_stars = float(user_json['average_stars'])
+        user_review_count = user_json['review_count']
+        user_avg_votes_useful = float(user_json['votes']['useful'] / user_review_count)
+        user_data[user_json['user_id']] = (user_average_stars, user_review_count, user_avg_votes_useful)
+
     # test set
     else:
       days_active = (datetime(2013, 03, 12) - review_date).days
+      # load/process user data
+      for line in open("./yelp_training_set_json/yelp_training_set_user.json"):
+        user_json = json.loads(line)
+        user_average_stars = float(user_json['average_stars'])
+        user_review_count = user_json['review_count']
+        user_avg_votes_useful = float(user_json['votes']['useful'] / user_review_count)
+        user_data[user_json['user_id']] = (user_average_stars, user_review_count, user_avg_votes_useful)
+
+      for line in open("./yelp_test_set_json/yelp_test_set_user.json"):
+        user_test_json = json.loads(line)
+        user_average_stars = float(user_test_json['average_stars'])
+        user_review_count = user_test_json['review_count']
+        user_avg_votes_useful = 'NA'
+        user_data[user_test_json['user_id']] = (user_average_stars, user_review_count, user_avg_votes_useful)
 
     # if the review isn't blank
     if review_json['text'] != '':
@@ -100,7 +105,7 @@ def processReviews(json_file):
         average_word_length == 0
       else:
         average_word_length = float(sum(len(word) for word in filtered))/len(filtered)
-    
+
     f.write("%s,%i,%i,%i,%i,%f,%i,%i,%i,%i,%.2f\n" % (user_id, votes_useful, days_active,
                                                  comma_count, word_count, average_word_length,
                                                  sentence_count, smilies, sentiment, 
@@ -113,12 +118,14 @@ def processReviews(json_file):
 
 
 
+
+
+
+
+
 def main():
   processReviews(sys.argv[1])
   return 0
-
-
-
 
 
 if __name__ == '__main__':
