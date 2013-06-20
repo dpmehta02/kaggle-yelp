@@ -4,6 +4,7 @@
 # @dpmehta02
 # Output commas, words, and word length for each yelp review
 # Usage: $ python reviewProcessing.py <input_file>.json <output_file>
+# python reviewProcessing.py yelp_training_set_review.json train_results.csv
 ########################################################################
 
 # TODO - add user avg votes useful (REPLACE MISSING WITH MEAN OR MEDIAN?)
