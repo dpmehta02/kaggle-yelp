@@ -35,6 +35,33 @@ def processReviews(json_file):
   # write headers (ADD POOR GRAMMAR, POOR SPELLING?)
   f.write("user_id,votes_useful,days_active,comma_count,word_count,average_word_length,sentence_count,smilies,sentiment,character_count,user_average_stars\n")
 
+  # user_data[user_id] = (average_stars, review_count, avg_votes_useful)
+  user_data = {}
+
+  if sys.argv[1] == 'yelp_training_set_review.json':
+    # load/process user data
+    for line in open("./yelp_training_set_json/yelp_training_set_user.json"):
+      user_json = json.loads(line)
+      user_average_stars = float(user_json['average_stars'])
+      user_review_count = user_json['review_count']
+      user_avg_votes_useful = float(user_json['votes']['useful'] / user_review_count)
+      user_data[user_json['user_id']] = (user_average_stars, user_review_count, user_avg_votes_useful)
+  
+  if sys.argv[1] == 'yelp_test_set_review.json':
+    # load/process user data
+    for line in open("./yelp_test_set_json/yelp_test_set_user.json"):
+      user_test_json = json.loads(line)
+      user_average_stars = float(user_test_json['average_stars'])
+      user_review_count = user_test_json['review_count']
+      user_avg_votes_useful = 'NA'
+      user_data[user_test_json['user_id']] = (user_average_stars, user_review_count, user_avg_votes_useful)
+    for line in open("./yelp_training_set_json/yelp_training_set_user.json"):
+      user_json = json.loads(line)
+      user_average_stars = float(user_json['average_stars'])
+      user_review_count = user_json['review_count']
+      user_avg_votes_useful = float(user_json['votes']['useful'] / user_review_count)
+      user_data[user_json['user_id']] = (user_average_stars, user_review_count, user_avg_votes_useful)
+
   # load/process the reviews
   for line in open(json_file):
     review_json = json.loads(line)
@@ -47,9 +74,6 @@ def processReviews(json_file):
     smilies = 0
     character_count = 0
     user_id = review_json['user_id']
-    
-    # user_data[user_id] = (average_stars, review_count, avg_votes_useful)
-    user_data = {}
 
     review_date = datetime.strptime(review_json['date'].encode('utf8'),"%Y-%m-%d")
     
@@ -57,31 +81,10 @@ def processReviews(json_file):
     if review_json.get('votes'):
       votes_useful = review_json['votes']['useful']
       days_active = (datetime(2013, 01, 19) - review_date).days
-      # load/process user data
-      for line in open("./yelp_training_set_json/yelp_training_set_user.json"):
-        user_json = json.loads(line)
-        user_average_stars = float(user_json['average_stars'])
-        user_review_count = user_json['review_count']
-        user_avg_votes_useful = float(user_json['votes']['useful'] / user_review_count)
-        user_data[user_json['user_id']] = (user_average_stars, user_review_count, user_avg_votes_useful)
 
     # test set
     else:
       days_active = (datetime(2013, 03, 12) - review_date).days
-      # load/process user data
-      for line in open("./yelp_training_set_json/yelp_training_set_user.json"):
-        user_json = json.loads(line)
-        user_average_stars = float(user_json['average_stars'])
-        user_review_count = user_json['review_count']
-        user_avg_votes_useful = float(user_json['votes']['useful'] / user_review_count)
-        user_data[user_json['user_id']] = (user_average_stars, user_review_count, user_avg_votes_useful)
-
-      for line in open("./yelp_test_set_json/yelp_test_set_user.json"):
-        user_test_json = json.loads(line)
-        user_average_stars = float(user_test_json['average_stars'])
-        user_review_count = user_test_json['review_count']
-        user_avg_votes_useful = 'NA'
-        user_data[user_test_json['user_id']] = (user_average_stars, user_review_count, user_avg_votes_useful)
 
     # if the review isn't blank
     if review_json['text'] != '':
