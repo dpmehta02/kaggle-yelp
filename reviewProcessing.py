@@ -6,9 +6,9 @@
 # Usage: $ python reviewProcessing.py <input_file>.json <output_file>
 ########################################################################
 
-# TODO - add user avg votes useful (REPLACE MISSING WITH MEAN OR MEDIAN?)
-# visualize new data
-# TRAIN RANDOM FOREST REGRESSION HERE SKLEARN, 
+# TODO - user avg votes useful (REPLACE MISSING WITH MEAN OR MEDIAN?)
+# visualize new data (to decide which features to transform)
+# TRAIN RANDOM FOREST REGRESSION sklearn
 # GENERATE SUBMISSION
 # THEN, UPLOAD TO OCTAVE AND RUN LINEAR REGRESSION, ONE-VS-ALL, ...
 # TRAIN ALGO WITH AND WITHOUT AVG VOTES USEFUL, APPLY TWO DIFFERENT ALGOS TO TEST SET
