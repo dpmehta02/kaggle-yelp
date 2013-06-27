@@ -16,6 +16,7 @@ linreg/*.csv
 linreg/*.mat
 
 .~lock.test_reviews.csv#
+.~*
 
 .DS_Store
 .Rhistory
