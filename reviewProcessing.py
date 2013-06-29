@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 ########################################################################
-# @dpmehta02
+# @dpmehta02 dpmehta02@gmail.com
 # Processes yelp json/csv, analyzes text, generates csv
 # Usage: $ python reviewProcessing.py <input_file>.json <output_file>
 ########################################################################
