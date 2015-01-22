@@ -1,1 +1,1 @@
-Text processing scripts for Kaggle's Yelp competition.
+NLP scripts for Kaggle's Yelp competition.
