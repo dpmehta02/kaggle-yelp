@@ -1,2 +1,1 @@
-Scripts for Kaggle's Yelp competition
-Dev Mehta @dpmehta02
+Text processing scripts for Kaggle's Yelp competition.
