@@ -5,6 +5,8 @@
 
 yelp_test_set_json/*.json
 yelp_training_set_json/*.json
+yelp_test_set_json/*.csv
+yelp_training_set_json/*.csv
 
 backup/yelp_training_set/*.csv
 backup/yelp_test_set/*.csv
