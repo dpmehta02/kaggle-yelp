@@ -1,20 +1,23 @@
-#!/usr/bin/env python
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
-# @dpmehta02
-# Create bag-of-words matrix
+"""
+Author: Dev Mehta / dpmehta02@gmail.com
+Description: Create bag-of-words (Term-Document) matrix from a csv of strings
+Usage: python generateTDM.py
+"""
 
 import textmining
 
 def main():
-  # Initialize
-  tdm = textmining.TermDocumentMatrix()
-  
-  for line in open('train_plus_test_reviews.csv', 'r'):
-    # Add each review
-    tdm.add_doc(line)
-    # Write out the matrix to a csv file. Cutoff is words
-    # which appear in x or more documents
-    tdm.write_csv('matrix.csv', cutoff=2)
+    # This file should only include rows of text. Be careful of mid-string
+    # linebreaks!
+    with open("train_plus_test_reviews.csv", "r") as f:
+        tdm = textmining.TermDocumentMatrix()
+        for line in f:
+            tdm.add_doc(line)
+            # Only include words which appear in 2+ documents
+            tdm.write_csv('matrix.csv', cutoff=2)
 
 if __name__ == '__main__':
   main()
